@@ -1,0 +1,7 @@
+smartbox_skeleton_remote_demo:
+    resource: "@SmartboxSkeletonRemoteDemoBundle/Resources/config/routing.yml"
+    prefix:   /remote
+
+smartbox_skeleton:
+    resource: "@SmartboxSkeletonBundle/Resources/config/routing.yml"
+    prefix:   /

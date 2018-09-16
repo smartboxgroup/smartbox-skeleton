@@ -1,0 +1,2 @@
+imports:
+    resource: routing_endpoints/routing_endpoints.yml

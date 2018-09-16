@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="direct://responses/accepted"/>
+            <to uri="file.json://fixtures/body/resultAccepted">
+                <description>provides generic OK/Accepted response</description>
+            </to>
+            <transform>
+                <description>add transaction id to body</description>
+                <simple>msg.getBody().setTransactionId(msg.getContext().get('transaction_id'))</simple>
+            </transform>
+            <transform>
+                <description>Add current timestamp to the Accept message</description>
+                <simple>msg.getBody().setTimestamp(now)</simple>
+            </transform>
+        </route>
+    </camelContext>
+
+</beans>

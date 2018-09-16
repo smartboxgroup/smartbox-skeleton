@@ -1,0 +1,7 @@
+smartbox_skeleton_remote_demo_homepage:
+    path:     /
+    defaults: { _controller: SmartboxSkeletonRemoteDemoBundle:Default:index }
+
+smartbox_skeleton_remote_demo_pong:
+    path:     /pong
+    defaults: { _controller: SmartboxSkeletonRemoteDemoBundle:Default:pong }

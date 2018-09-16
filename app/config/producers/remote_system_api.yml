@@ -1,0 +1,49 @@
+services:
+    smartbox.clients.rest.remote_system_api:
+        class: GuzzleHttp\Client
+        arguments: [{timeout: 0, allow_redirects: false, verify: false}]
+        lazy: true
+        tags:
+          - { name: mockable.rest_client, mockLocation: "external_system_response_cache_dir%/remoteSystemApi" }
+
+smartbox_integration_framework:
+    mappings:
+        pingToRemoteApi:
+            message: obj.getMessage()
+            time: obj.getTimestamp()
+    producers:
+        remote_system_api:
+            class: SmartboxSkeletonBundle\Producers\RemoteSystemApiProducer
+            description: producers to connection to a remote api
+            calls:
+              - [setName, ['remote_system_api'] ]
+              - [setHttpClient, ['@smartbox.clients.rest.remote_system_api'] ]
+              - [setValidator, ['@validator']]
+              - [setHydrator,['@smartcore.hydrator.group_version'] ]
+
+            options:
+                encoding: json
+                base_uri: '%remote_system_api.base.uri%'
+                authentication: 'none'
+                username: '%remote_system_api.username%'
+                password: '%remote_system_api.password%'
+
+
+            methods:
+                sendPingMessage:
+                    description: 'Send ping to a remote api'
+                    steps:
+                      - define:
+                          PingMessage: "eval: body"
+                      - request:
+                          name: sendPingMessage
+                          http_method: POST
+                          uri: /skeleton/web/app_dev.php/remote/pong
+                          body: "eval: mapper.map(PingMessage, 'pingToRemoteApi')"
+                          validations:
+                              - rule: "eval: responses['sendPingMessage']['statusCode'] == 200"
+                                message: "eval: 'Enexpected response from Web Api: ' ~ responses['sendPingMessage']['statusCode']"
+                                recoverable: true
+                                display_message: true
+                    response:
+                        body: "eval: responses['sendPingMessage']['body']"

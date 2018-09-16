@@ -1,0 +1,7 @@
+smartbox_skeleton_homepage:
+    path:     /
+    defaults: { _controller: SmartboxSkeletonBundle:Default:index }
+
+smartbox_skeleton_api:
+    path:     /api/{methodName}
+    defaults: { _controller: SmartboxSkeletonBundle:Api:api,"methodName" : "" }

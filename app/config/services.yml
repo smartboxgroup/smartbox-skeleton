@@ -1,0 +1,17 @@
+# Learn more about services, parameters and containers at
+# https://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+
+services:
+     smartbox_skeleton_persistence:
+        class: SmartboxSkeletonBundle\Services\PersistenceService
+        arguments: ["@logger","@kernel","@doctrine.orm.default_entity_manager"]
+        tags:
+            - { name: monolog.logger, channel: skeleton }
+
+     smartbox_skeleton_request_handler:
+        class: SmartboxSkeletonBundle\Services\RequestHandlerService
+        arguments: ["@kernel"]
+        tags:
+            - { name: monolog.logger, channel: skeleton }

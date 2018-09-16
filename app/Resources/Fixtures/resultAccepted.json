@@ -1,0 +1,7 @@
+{
+  "_type":"SmartboxSkeletonBundle\\Entity\\Result",
+  "_apiVersion":"v0",
+  "_group": "public",
+  "message": "Accepted (Will be performed asynchronously)",
+  "code": 202
+}

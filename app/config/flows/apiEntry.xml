@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="api://entry/{apiService}/{apiVersion}/{apiMethod}" customId="true" id="api_entry">
+                <description/>
+            </from>
+            <choice>
+                <when customId="true" id="is_async">
+                    <simple>headers['async'] == 'true'</simple>
+                    <transform customId="true" id="set_priority_to_exchange">
+                        <description>Transformer to transmit message priority into exchange.</description>
+                        <simple>exchange.setHeader('priority',msg.getContext().get('priority'))</simple>
+                    </transform>
+                    <to uri="queue://api/{priority}/{apiService}/{apiVersion}/{apiMethod}" customId="true" id="send_to_api_queue">
+                        <description>Queue to store async api calls before processing</description>
+                    </to>
+                    <to uri="direct://responses/accepted" customId="true" id="say_accepted"/>
+                </when>
+                <otherwise>
+                    <to uri="api://execute/{apiService}/{apiVersion}/{apiMethod}" customId="true" id="execute_api_method_sync"/>
+                </otherwise>
+            </choice>
+        </route>
+    </camelContext>
+
+</beans>

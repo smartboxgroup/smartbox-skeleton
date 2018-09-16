@@ -1,0 +1,60 @@
+api_request:
+  path: "api://{path}"
+  defaults:
+    _protocol: @smartesb.protocols.direct
+  requirements:
+    path: "[a-zA-Z0-9/._]+"
+
+queues.main:
+  path: "queue://main/{queue}"
+  defaults:
+    _protocol: @smartesb.protocols.queue
+    prefix: ""
+    queue_driver: '%default.queues.driver%'
+  requirements:
+    queue: "[a-zA-Z0-9/]+"
+    queue_driver: "[a-zA-Z0-9]+"
+
+queues.api:
+  path: "queue://api/{queue}"
+  defaults:
+    _protocol: @smartesb.protocols.queue
+    queue_driver: '%default.queues.driver%'
+    prefix: "%kernel.environment%/api_async/"
+  requirements:
+    queue: "[a-zA-Z0-9/_*]+"
+
+service:
+  path: "service://{service}/{method}"
+  defaults:
+    _protocol: "@smartesb.protocols.service"
+  requirements:
+    service: "[a-zA-Z0-9/_.-]+"
+    method: "[a-zA-Z0-9_]+"
+
+direct:
+  path: "direct://{path}"
+  defaults:
+    _protocol: "@smartesb.protocols.direct"
+  requirements:
+    path: "[a-zA-Z0-9/_]+"
+
+external_systems:
+    resource: routing_external_systems.yml
+    defaults:
+    requirements:
+      method: "[a-zA-Z0-9]+"
+
+fixtures.read:
+  path: "file.json://fixtures/{type}/{filename}"
+  defaults:
+    _protocol: @smartesb.protocols.json_file
+    base_path: "%fixtures_path%"
+  requirements:
+    type: "body|headers"
+    filename: ".+"
+
+smartbox_integration_platform:
+    resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_endpoint_routes.yml"
+    prefix:   /
+
