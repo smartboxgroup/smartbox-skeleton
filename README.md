@@ -5,8 +5,10 @@ A Symfony project to get you up and running quickly with the Smartbox Enterprise
 This project will demonstrate a bare bones setup of a the Smartbox Open Source bundles.
 
 
-
 ### Current status
+
+[![Build Status](https://travis-ci.org/melmccann/smartbox-skeleton.svg?branch=master)](https://travis-ci.org/melmccann/smartbox-skeleton)
+
 This is the initial version of the skeleton bundle and will require more documentation, code cleanups, more tests and examples of functionality. 
 
 Please note that Travis-ci, code coverage etc. will be added in time.
