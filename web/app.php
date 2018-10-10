@@ -1,5 +1,4 @@
 <?php
-z
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../app/autoload.php';
