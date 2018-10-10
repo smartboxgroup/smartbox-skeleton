@@ -1,6 +1,7 @@
 {
-    "name": "melmccann/smartbox-skeleton",
-    "license": "proprietary",
+    "name": "smartbox/skeleton-bundle",
+    "description": "Smartbox Integrations Framework Skeleton Bundle",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -66,7 +67,6 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
-        },
-        "branch-alias": null
+        }
     }
 }
