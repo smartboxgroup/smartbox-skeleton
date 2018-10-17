@@ -31,7 +31,11 @@ before_script:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - SYMFONY_DEPRECATIONS_HELPER=weak bin/phpunit --debug
+  - SYMFONY_DEPRECATIONS_HELPER=weak bin/phpunit --debug --coverage-clover ./test/clover.xml
+
+after_script:
+  - composer require php-coveralls/php-coveralls:^2.0
+  - php ./vendor/php-coveralls/php-coveralls/bin/php-coveralls -v
 
 services:
   - rabbitmq
