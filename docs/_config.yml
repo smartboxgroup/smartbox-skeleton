@@ -8,6 +8,8 @@ collections:
     output: true
   bundles:
     output: true
+  other:
+    output: true
 
 defaults:
 -
