@@ -1,0 +1,36 @@
+.wrapper header > .list > li {
+    float: none;
+    border: 0 none;
+    list-style: inside;
+    width: 100%;
+}
+
+.wrapper header > .list > li > a {
+    text-align: left;
+}
+
+header > ul.list {
+    background: none;
+    height: auto;
+}
+
+header .list ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+header .list li {
+    font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+    border-bottom: 1px solid #ccc;
+}
+
+header .list li:last-child {
+    border: none;
+}
+
+header .list li a {
+    text-decoration: none;
+    color: #000;
+    display: inline;
+}
