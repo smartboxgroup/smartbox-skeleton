@@ -21,8 +21,9 @@ header .list ul {
 }
 
 header .list li {
-    font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+    font: 200 10px/1 Helvetica, Verdana, sans-serif;
     border-bottom: 1px solid #ccc;
+    height: 20px;
 }
 
 header .list li:last-child {
