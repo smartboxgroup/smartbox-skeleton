@@ -1,5 +1,5 @@
 ---
-name: Introduction to Enterprise Integration Patterns
+title: Introduction to Enterprise Integration Patterns
 permalink: introduction/eip
 ---
 

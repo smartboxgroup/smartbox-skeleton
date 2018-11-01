@@ -1,5 +1,5 @@
 ---
-name: Create a new JSON Producer
+title: Create a new JSON Producer
 permalink: samples/jsonproducer
 ---
 

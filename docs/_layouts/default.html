@@ -25,28 +25,28 @@
         <h3>Introduction</h3>
         <ul class="list">
             {% for collection in site.introduction %}
-                <li><a href="{{ collection.permalink | relative_url }}">{{ collection.name }}</a></li>
+                <li><a href="{{ collection.permalink | relative_url }}">{{ collection.title }}</a></li>
             {% endfor %}
         </ul>
 
         <h3>Samples</h3>
         <ul class="list">
             {% for collection in site.samples %}
-                <li><a href="{{ collection.permalink | relative_url}}">{{ collection.name }}</a></li>
+                <li><a href="{{ collection.permalink | relative_url}}">{{ collection.title }}</a></li>
             {% endfor %}
         </ul>
 
         <h3>Bundles</h3>
         <ul class="list">
             {% for collection in site.bundles %}
-                <li><a href="{{ collection.permalink | relative_url}}">{{ collection.name }}</a></li>
+                <li><a href="{{ collection.permalink | relative_url}}">{{ collection.title }}</a></li>
             {% endfor %}
         </ul>
 
         <h3>Other</h3>
         <ul class="list">
             {% for collection in site.other %}
-                <li><a href="{{ collection.permalink | relative_url}}">{{ collection.name }}</a></li>
+                <li><a href="{{ collection.permalink | relative_url}}">{{ collection.title }}</a></li>
             {% endfor %}
         </ul>
 

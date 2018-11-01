@@ -1,5 +1,5 @@
 ---
-name: Set up workers to consume messages
+title: Set up workers to consume messages
 permalink: samples/workers
 ---
 

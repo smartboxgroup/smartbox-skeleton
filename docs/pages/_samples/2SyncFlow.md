@@ -1,5 +1,5 @@
 ---
-name: Create a new sync flow
+title: Create a new sync flow
 permalink: samples/syncflow
 ---
 
