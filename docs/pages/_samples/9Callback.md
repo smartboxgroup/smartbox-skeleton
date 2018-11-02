@@ -1,5 +1,5 @@
 ---
-title: Callback flow
+name: Callback flow
 permalink: samples/callbackflow
 ---
 

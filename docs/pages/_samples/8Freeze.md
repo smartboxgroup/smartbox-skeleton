@@ -1,5 +1,5 @@
 ---
-title: Freeze flows
+name: Freeze flows
 permalink: samples/freezeflows
 ---
 

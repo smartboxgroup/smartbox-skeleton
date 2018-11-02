@@ -1,5 +1,5 @@
 ---
-title: Create a new broadcast flow
+name: Create a new broadcast flow
 permalink: samples/broadcastflow
 ---
 

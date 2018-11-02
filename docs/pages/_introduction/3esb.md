@@ -1,5 +1,5 @@
 ---
-title: Introduction to Enterprise Service Bus
+name: Introduction to Enterprise Service Bus
 permalink: introduction/esb
 ---
 

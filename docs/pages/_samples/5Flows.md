@@ -1,5 +1,5 @@
 ---
-title: Create a flow diversion
+name: Create a flow diversion
 permalink: samples/flowdiversion
 ---
 
