@@ -1,3 +1,8 @@
+---
+title: To Do
+permalink: other/todo
+---
+
 ### To Do
 * Add Travis-Ci testing when project is made public
 * Add proper api interface with documentation... consider Nelmio Api Docs
