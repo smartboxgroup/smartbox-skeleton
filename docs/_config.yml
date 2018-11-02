@@ -1,1 +1,19 @@
-theme: jekyll-theme-cayman
+theme: jekyll-theme-minimal
+
+collections_dir: pages
+collections:
+  introduction:
+    output: true
+  samples:
+    output: true
+  bundles:
+    output: true
+  other:
+    output: true
+
+defaults:
+-
+  scope:
+    path: ""
+  values:
+    layout: "default"

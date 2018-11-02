@@ -1,13 +1,14 @@
+---
+title: Installation and Setup Guide
+permalink: introduction/installation
+---
+
 # Installation and Setup Guide for the Smartbox Integration Framework bundle
-
-### Preface
-
-
 
 ## Configure
 
 To get the framework up and running we will make the following assumptions regarding software that we will be using:
-* Queuing system : RabbitMq
+* Queuing system : RabbitMQ
 * Database: MySql
 * Process Control: Supervisor
 * WebServer: Apache + PHP 7.0
@@ -19,7 +20,6 @@ To simplify our setup we will install all the related Smartbox bundles
 Add the following to composer.json and run ```composer install```
 
 ```yaml
-
 "smartbox/core-bundle": "^1.0.0",
 "smartbox/integration-framework-bundle": "^1.20.4",
 "smartbox/camel-config-bundle": "^1.0.0",
@@ -51,7 +51,7 @@ sudo apt-get install -y php7.0-curl php7.0-xml php7.0-soap php-apcu php-apcu-bc
 
 ### RabbitMQ
 
-#### RabbitMq Setup on Ubuntu
+#### RabbitMQ Setup on Ubuntu
 
 ```bash 
 # rabbitmq.sh
@@ -84,10 +84,13 @@ sudo apt-get install supervisor
 
 #### Create a worker configuration
 
- To create a consumer that will be controlled by supervisord, we can add a .conf file to the supervisor configurations directory. For example:
- ``` /etc/supervisor/conf.d/SuperHardWorker.conf```
- which would contain contents as follows:
- ```bash
+To create a consumer that will be controlled by supervisord, we can add a .conf file to the supervisor configurations directory. For example:
+ 
+    /etc/supervisor/conf.d/SuperHardWorker.conf
+ 
+which would contain contents as follows:
+
+```bash
 [program:consumer_db_queue]
 process_name = %(program_name)s_%(process_num)02d
 autostart = true
@@ -101,14 +104,3 @@ startretries = 10
 user = mel
  ```
 Note that the value ```numprocs=10``` means that supervisor will attempt to always run 10 instances/processes of the program.
-
-
-
-
-
-
-
-
-
-
-

@@ -19,10 +19,12 @@
         <whitelist>
             <directory>.</directory>
             <exclude>
+                <directory>app</directory>
                 <directory>vendor</directory>
                 <directory>bin</directory>
                 <directory>Resources</directory>
                 <directory>tests</directory>
+                <directory>web</directory>
             </exclude>
         </whitelist>
     </filter>
