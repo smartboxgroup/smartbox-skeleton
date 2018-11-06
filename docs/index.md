@@ -15,8 +15,6 @@ This project will demonstrate a bare bones setup of a the Smartbox Open Source b
 
 This is the initial version of the skeleton bundle and will require more documentation, code cleanups, more tests and examples of functionality. 
 
-Please note that Travis-ci, code coverage etc. will be added in time.
-
 For further information on the Smartbox Integration Framework Bundle please read the [setup guide](https://raw.githubusercontent.com/smartboxgroup/integration-framework-bundle/master/README.md). 
 
 You can access the Smartbox open source bundle via their [GitHub](https://github.com/smartboxgroup/) or using [Packagist.org](https://packagist.org/packages/smartbox/).
