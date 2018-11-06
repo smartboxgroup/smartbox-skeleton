@@ -59,3 +59,9 @@
 
 # PHP CS Fixer
 .php_cs.cache
+
+### Jekyll ###
+_site
+.sass-cache
+.jekyll-metadata
+Gemfile.lock
