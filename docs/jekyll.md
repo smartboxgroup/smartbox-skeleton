@@ -13,7 +13,7 @@ sudo apt-get install ruby ruby-dev build-essential
 Then install Bundler
 
 ```bash
-gem install bundler
+sudo gem install bundler
 ```
 
 Now go to the docs folder and install all the dependencies

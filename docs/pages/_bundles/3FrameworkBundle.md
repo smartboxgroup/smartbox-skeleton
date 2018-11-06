@@ -1,5 +1,5 @@
 ---
-title: FrameworkBundle
+name: FrameworkBundle
 permalink: bundles/frameworkbundle
 ---
 

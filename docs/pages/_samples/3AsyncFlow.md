@@ -1,5 +1,5 @@
 ---
-title: Create a new async flow
+name: Create a new async flow
 permalink: samples/asyncflow
 ---
 

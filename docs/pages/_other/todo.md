@@ -1,5 +1,5 @@
 ---
-title: To Do
+name: To Do
 permalink: other/todo
 ---
 

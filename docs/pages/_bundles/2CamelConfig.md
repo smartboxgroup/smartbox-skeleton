@@ -1,5 +1,5 @@
 ---
-title: CamelConfig
+name: CamelConfig
 permalink: bundles/camelconfig
 ---
 

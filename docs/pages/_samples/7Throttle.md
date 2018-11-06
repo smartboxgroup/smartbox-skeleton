@@ -1,5 +1,5 @@
 ---
-title: Throttle a flow
+name: Throttle a flow
 permalink: samples/throttle
 ---
 

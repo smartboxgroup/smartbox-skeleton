@@ -1,5 +1,5 @@
 ---
-title: Introduction to the Smartbox Open Source Projects
+name: Introduction to the Smartbox Open Source Projects
 permalink: introduction/opensource
 ---
 
