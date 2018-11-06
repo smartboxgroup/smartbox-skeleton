@@ -17,3 +17,10 @@ defaults:
     path: ""
   values:
     layout: "default"
+
+markdown: kramdown
+ highlighter: rouge
+ kramdown:
+   input: GFM #Github Flavored Markdown
+   hard_wrap: false
+   syntax_highlighter: rouge
