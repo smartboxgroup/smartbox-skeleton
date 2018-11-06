@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>1jsonproducer | smartbox-skeleton</title>
+<title>Create a new JSON Producer | smartbox-skeleton</title>
 <meta name="generator" content="Jekyll v3.7.4" />
-<meta property="og:title" content="1jsonproducer" />
+<meta property="og:title" content="Create a new JSON Producer" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Create a new JSON Producer" />
 <meta property="og:description" content="Create a new JSON Producer" />
@@ -16,13 +16,13 @@
 <meta property="og:url" content="http://localhost:4000/samples/jsonproducer" />
 <meta property="og:site_name" content="smartbox-skeleton" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-11-02T16:27:44+00:00" />
+<meta property="article:published_time" content="2018-11-06T09:17:52+00:00" />
 <script type="application/ld+json">
-{"headline":"1jsonproducer","dateModified":"2018-11-02T16:27:44+00:00","datePublished":"2018-11-02T16:27:44+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/samples/jsonproducer"},"url":"http://localhost:4000/samples/jsonproducer","description":"Create a new JSON Producer","@context":"http://schema.org"}</script>
+{"datePublished":"2018-11-06T09:17:52+00:00","dateModified":"2018-11-06T09:17:52+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/samples/jsonproducer"},"url":"http://localhost:4000/samples/jsonproducer","description":"Create a new JSON Producer","headline":"Create a new JSON Producer","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <!--<link rel="stylesheet" href="/assets/css/style.css?v=0382b7a159e5073bd07097ed0e7cf02cd7499a1e">-->
-    <!--<link rel="stylesheet" href="/assets/css/list.css?v=0382b7a159e5073bd07097ed0e7cf02cd7499a1e">-->
+    <!--<link rel="stylesheet" href="/assets/css/style.css?v=421e1892d772705cfb5e3da4cae91f83bd22b7a4">-->
+    <!--<link rel="stylesheet" href="/assets/css/list.css?v=421e1892d772705cfb5e3da4cae91f83bd22b7a4">-->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/simple-sidebar.css">
 
@@ -143,7 +143,211 @@
                 <br><br><br>
                 <h1 id="create-a-new-json-producer">Create a new JSON Producer</h1>
 
-<p>this is a test</p>
+<p>Here we will look at how we create a new producer, specifically a REST producer that will send JSON requests to a target system.
+Please note that the code samples below are taken from what was built in the Skeleton Bundle. This should hopefully provide some consistency between the descriptions here and the actual code.</p>
+
+<p>The main functionality for creating a producer is included in the Framework Bundle so our new producer will extend that class:
+<code class="highlighter-rouge">use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\RestConfigurableProducer;</code></p>
+
+<p>Here is what our new producer will look like: (<code class="highlighter-rouge">Producers/RemoteSystemApiProducer.php</code>)</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">SmartboxSkeletonBundle\Producers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\RestConfigurableProducer</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Smartbox\Integration\FrameworkBundle\Tools\SmokeTests\CanCheckConnectivityInterface</span><span class="p">;</span>
+
+<span class="sd">/**
+ * Class RemoteSystemApiProducer.
+ */</span>
+<span class="k">class</span> <span class="nc">RemoteSystemApiProducer</span> <span class="k">extends</span> <span class="nx">RestConfigurableProducer</span> <span class="k">implements</span> <span class="nx">CanCheckConnectivityInterface</span>
+<span class="p">{</span>
+    <span class="sd">/**
+     * {@inheritdoc}
+     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">checkConnectivityForSmokeTest</span><span class="p">(</span><span class="k">array</span> <span class="nv">$config</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="c1">//not implemented for now
+</span>    <span class="p">}</span>
+
+    <span class="sd">/**
+     * {@inheritdoc}
+     */</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">getConnectivitySmokeTestLabels</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">'important'</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>This, however, is not enough for the system to know how to route to this producer, hence we will need to add some configuration.
+Firstly we should create a YAML configuration that will descrive the functions of the producer. 
+In the Skeleton Bundle this is in the file: <code class="highlighter-rouge">app/config/producers/remote_system_api.yml</code>.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 
+ <span class="na">services</span><span class="pi">:</span>
+     <span class="s">smartbox.clients.rest.remote_system_api</span><span class="pi">:</span>
+         <span class="na">class</span><span class="pi">:</span> <span class="s">GuzzleHttp\Client</span>
+         <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[{</span><span class="nv">timeout</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">allow_redirects</span><span class="pi">:</span> <span class="nv">false</span><span class="pi">,</span> <span class="nv">verify</span><span class="pi">:</span> <span class="nv">false</span><span class="pi">}]</span>
+         <span class="na">lazy</span><span class="pi">:</span> <span class="no">true</span>
+         <span class="na">tags</span><span class="pi">:</span>
+           <span class="pi">-</span> <span class="pi">{</span> <span class="nv">name</span><span class="pi">:</span> <span class="nv">mockable.rest_client</span><span class="pi">,</span> <span class="nv">mockLocation</span><span class="pi">:</span> <span class="s2">"</span><span class="s">external_system_response_cache_dir%/remoteSystemApi"</span> <span class="pi">}</span>
+ 
+ <span class="na">smartbox_integration_framework</span><span class="pi">:</span>
+     <span class="na">mappings</span><span class="pi">:</span>
+         <span class="na">pingToRemoteApi</span><span class="pi">:</span>
+             <span class="na">message</span><span class="pi">:</span> <span class="s">obj.getMessage()</span>
+             <span class="na">time</span><span class="pi">:</span> <span class="s">obj.getTimestamp()</span>
+     <span class="na">producers</span><span class="pi">:</span>
+         <span class="na">remote_system_api</span><span class="pi">:</span>
+             <span class="na">class</span><span class="pi">:</span> <span class="s">SmartboxSkeletonBundle\Producers\RemoteSystemApiProducer</span>
+             <span class="na">description</span><span class="pi">:</span> <span class="s">producers to connection to a remote api</span>
+             <span class="na">calls</span><span class="pi">:</span>
+               <span class="pi">-</span> <span class="pi">[</span><span class="nv">setName</span><span class="pi">,</span> <span class="pi">[</span><span class="s1">'</span><span class="s">remote_system_api'</span><span class="pi">]</span> <span class="pi">]</span>
+               <span class="pi">-</span> <span class="pi">[</span><span class="nv">setHttpClient</span><span class="pi">,</span> <span class="pi">[</span><span class="s1">'</span><span class="s">@smartbox.clients.rest.remote_system_api'</span><span class="pi">]</span> <span class="pi">]</span>
+               <span class="pi">-</span> <span class="pi">[</span><span class="nv">setValidator</span><span class="pi">,</span> <span class="pi">[</span><span class="s1">'</span><span class="s">@validator'</span><span class="pi">]]</span>
+               <span class="pi">-</span> <span class="pi">[</span><span class="nv">setHydrator</span><span class="pi">,[</span><span class="s1">'</span><span class="s">@smartcore.hydrator.group_version'</span><span class="pi">]</span> <span class="pi">]</span>
+ 
+             <span class="na">options</span><span class="pi">:</span>
+                 <span class="na">encoding</span><span class="pi">:</span> <span class="s">json</span>
+                 <span class="na">base_uri</span><span class="pi">:</span> <span class="s1">'</span><span class="s">%remote_system_api.base.uri%'</span>
+                 <span class="na">authentication</span><span class="pi">:</span> <span class="s1">'</span><span class="s">none'</span>
+                 <span class="na">username</span><span class="pi">:</span> <span class="s1">'</span><span class="s">%remote_system_api.username%'</span>
+                 <span class="na">password</span><span class="pi">:</span> <span class="s1">'</span><span class="s">%remote_system_api.password%'</span>
+ 
+ 
+             <span class="na">methods</span><span class="pi">:</span>
+                 <span class="na">sendPingMessage</span><span class="pi">:</span>
+                     <span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Send</span><span class="nv"> </span><span class="s">ping</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">remote</span><span class="nv"> </span><span class="s">api'</span>
+                     <span class="na">steps</span><span class="pi">:</span>
+                       <span class="pi">-</span> <span class="na">define</span><span class="pi">:</span>
+                           <span class="na">PingMessage</span><span class="pi">:</span> <span class="s2">"</span><span class="s">eval:</span><span class="nv"> </span><span class="s">body"</span>
+                       <span class="pi">-</span> <span class="na">request</span><span class="pi">:</span>
+                           <span class="na">name</span><span class="pi">:</span> <span class="s">sendPingMessage</span>
+                           <span class="na">http_method</span><span class="pi">:</span> <span class="s">POST</span>
+                           <span class="na">uri</span><span class="pi">:</span> <span class="s">/smartbox-skeleton/web/remote/pong</span>
+                           <span class="na">body</span><span class="pi">:</span> <span class="s2">"</span><span class="s">eval:</span><span class="nv"> </span><span class="s">mapper.map(PingMessage,</span><span class="nv"> </span><span class="s">'pingToRemoteApi')"</span>
+                           <span class="na">validations</span><span class="pi">:</span>
+                               <span class="pi">-</span> <span class="na">rule</span><span class="pi">:</span> <span class="s2">"</span><span class="s">eval:</span><span class="nv"> </span><span class="s">responses['sendPingMessage']['statusCode']</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">200"</span>
+                                 <span class="na">message</span><span class="pi">:</span> <span class="s2">"</span><span class="s">eval:</span><span class="nv"> </span><span class="s">'Enexpected</span><span class="nv"> </span><span class="s">response</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">Web</span><span class="nv"> </span><span class="s">Api:</span><span class="nv"> </span><span class="s">'</span><span class="nv"> </span><span class="s">~</span><span class="nv"> </span><span class="s">responses['sendPingMessage']['statusCode']"</span>
+                                 <span class="na">recoverable</span><span class="pi">:</span> <span class="no">true</span>
+                                 <span class="na">display_message</span><span class="pi">:</span> <span class="no">true</span>
+                     <span class="na">response</span><span class="pi">:</span>
+                         <span class="na">body</span><span class="pi">:</span> <span class="s2">"</span><span class="s">eval:</span><span class="nv"> </span><span class="s">responses['sendPingMessage']['body']"</span>
+
+ 
+</code></pre></div></div>
+
+<p>As you can see from looking at the YAML above, we have called our producer “remote_system_api” and link it to our PHP class on the line: <code class="highlighter-rouge">class: SmartboxSkeletonBundle\Producers\RemoteSystemApiProducer</code>.
+ There are quite a number of configuations here but most noteworthy are the “mappings” and the “methods”. Once you have set up your producer and configuration, you will most likely use this two frequently to transform content and send it via different methods to different end points. 
+ At the time of writing we only have one method defined, “sendPingMessage”. This method specifies where we are to send data and how.</p>
+
+<p>The last peice of the pie is to specify a routing URI that will describe how we will route to our new producer. We have done this in the file: <code class="highlighter-rouge">app/config/routing_endpoints/routing_external_systems.yml</code>.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="na">remote_system_api</span><span class="pi">:</span>
+  <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">rest://remote_system_api/{method}"</span>
+  <span class="na">defaults</span><span class="pi">:</span>
+    <span class="na">_protocol</span><span class="pi">:</span> <span class="err">@</span><span class="s">smartesb.protocols.configurable.rest</span>
+    <span class="na">_producer</span><span class="pi">:</span> <span class="err">@</span><span class="s">smartesb.producers.remote_system_api</span>
+</code></pre></div></div>
+
+<p>So, if we are defining a flow to send to our “sendPingMessage” method, we will route to the URI:
+<code class="highlighter-rouge">rest://remote_system_api/sendPingMessage</code></p>
+
+<p>The file “routing_external_systems.yml” is included in our file:  “routing_endpoints.yml”</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">external_systems</span><span class="pi">:</span>
+    <span class="na">resource</span><span class="pi">:</span> <span class="s">routing_external_systems.yml</span>
+    <span class="na">defaults</span><span class="pi">:</span>
+    <span class="na">requirements</span><span class="pi">:</span>
+      <span class="na">method</span><span class="pi">:</span> <span class="s2">"</span><span class="s">[a-zA-Z0-9]+"</span>
+
+</code></pre></div></div>
+
+<p>which in turn is included in the following files:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app/config/routing_endpoints_dev.yml
+
+app/config/routing_endpoints_prod.yml
+
+app/config/routing_endpoints_test.yml
+
+</code></pre></div></div>
+<p>by the line:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">imports</span><span class="pi">:</span>
+    <span class="na">resource</span><span class="pi">:</span> <span class="s">routing_endpoints/routing_endpoints.yml</span>
+</code></pre></div></div>
+
+<p>The above files are loaded by the Framework Bundle in the config file: <code class="highlighter-rouge">/vendor/smartbox/integration-framework-bundle/Resources/config/routing.yml</code></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="s">smartesb.router.endpoints</span><span class="pi">:</span>
+      <span class="na">class</span><span class="pi">:</span> <span class="err">%</span><span class="s">smartesb.internal_router.class%</span>
+      <span class="na">arguments</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s1">'</span><span class="s">@service_container'</span>
+        <span class="pi">-</span> <span class="s2">"</span><span class="s">%kernel.root_dir%/config/routing_endpoints_%kernel.environment%.yml"</span>
+        <span class="pi">-</span> <span class="err">%</span><span class="s">smartesb.router.endpoints.options%</span>
+      <span class="na">tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="pi">{</span> <span class="nv">name</span><span class="pi">:</span> <span class="nv">monolog.logger</span><span class="pi">,</span> <span class="nv">channel</span><span class="pi">:</span> <span class="s2">"</span><span class="s">router.endpoints"</span> <span class="pi">}</span>
+</code></pre></div></div>
+
+<p>The Framework Bundle will handle the creation of our producer during the compiler pass. As for the routing, the Camel Config Bundle will create the routes that we can then specify in our XML, for example:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:camel=</span><span class="s">"http://camel.apache.org/schema/spring"</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;camelContext</span> <span class="na">trace=</span><span class="s">"false"</span> <span class="na">xmlns=</span><span class="s">"http://camel.apache.org/schema/spring"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;route&gt;</span>
+            <span class="nt">&lt;from</span> <span class="na">uri=</span><span class="s">"api://execute/skeleton/v0/ping"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;to</span> <span class="na">uri=</span><span class="s">"rest://remote_system_api/sendPingMessage"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/route&gt;</span>
+    <span class="nt">&lt;/camelContext&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>With regard to the “mappings” section defined in the YAML configuation for the producer, this allows us to transform our Entity’s fields to meet the requirements of the remote systems API endpoint. 
+In our example we have the following:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">mappings</span><span class="pi">:</span>
+     <span class="na">pingToRemoteApi</span><span class="pi">:</span>
+         <span class="na">message</span><span class="pi">:</span> <span class="s">obj.getMessage()</span>
+         <span class="na">time</span><span class="pi">:</span> <span class="s">obj.getTimestamp()</span>
+</code></pre></div></div>
+
+<p>This mapping is refrerenced in the “request” part of of the “sendPingMessage” method:</p>
+
+<p><code class="highlighter-rouge">body: "eval: mapper.map(PingMessage, 'pingToRemoteApi')"</code></p>
+
+<p>However, if the remote endpoint expected the message to be named as “ping_message” we can easily match their expectation by altering our YAML configuration.</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">mappings</span><span class="pi">:</span>
+     <span class="na">pingToRemoteApi</span><span class="pi">:</span>
+         <span class="na">ping_message</span><span class="pi">:</span> <span class="s">obj.getMessage()</span>
+         <span class="na">time</span><span class="pi">:</span> <span class="s">obj.getTimestamp()</span>
+</code></pre></div></div>
+<p>For another example, say that the target system requires the date in a particular format, we can do that transformation before we send it.</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">mappings</span><span class="pi">:</span>
+     <span class="na">pingToRemoteApi</span><span class="pi">:</span>
+         <span class="na">ping_message</span><span class="pi">:</span> <span class="s">obj.getMessage()</span>
+         <span class="na">time</span><span class="pi">:</span> <span class="s">mapper.formatDate('Y/m/d', obj.getTimestamp())</span>
+</code></pre></div></div>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">mappings</span><span class="pi">:</span>
+     <span class="na">pingToRemoteApi</span><span class="pi">:</span>
+         <span class="na">ping_message</span><span class="pi">:</span> <span class="s">obj.getMessage()</span>
+         <span class="na">time</span><span class="pi">:</span> <span class="s">mapper.formatDate('Y/m/d H:i:s', obj.getTimestamp())</span>
+</code></pre></div></div>
+
+<p>Note that we can use the default Symfony Expression Language functions here and also custom expressions that have been added to the Framework Bundle:</p>
+
+<p><code class="highlighter-rouge">/vendor/smartbox/integration-framework-bundle/Tools/Evaluator/ExpressionEvaluator.php</code></p>
+
+<p>and</p>
+
+<p><code class="highlighter-rouge">/vendor/smartbox/integration-framework-bundle/Tools/Evaluator/CustomExpressionLanguageProvider.php</code></p>
+
+<p>Have a look at these classes to see what they have to offer.</p>
+
 
             </div>
             <div class="col-1">

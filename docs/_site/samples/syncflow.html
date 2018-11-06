@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>2syncflow | smartbox-skeleton</title>
+<title>Create a new sync flow | smartbox-skeleton</title>
 <meta name="generator" content="Jekyll v3.7.4" />
-<meta property="og:title" content="2syncflow" />
+<meta property="og:title" content="Create a new sync flow" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Create a new sync flow" />
 <meta property="og:description" content="Create a new sync flow" />
@@ -16,13 +16,13 @@
 <meta property="og:url" content="http://localhost:4000/samples/syncflow" />
 <meta property="og:site_name" content="smartbox-skeleton" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-11-02T16:27:44+00:00" />
+<meta property="article:published_time" content="2018-11-06T09:17:52+00:00" />
 <script type="application/ld+json">
-{"headline":"2syncflow","dateModified":"2018-11-02T16:27:44+00:00","datePublished":"2018-11-02T16:27:44+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/samples/syncflow"},"url":"http://localhost:4000/samples/syncflow","description":"Create a new sync flow","@context":"http://schema.org"}</script>
+{"datePublished":"2018-11-06T09:17:52+00:00","dateModified":"2018-11-06T09:17:52+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/samples/syncflow"},"url":"http://localhost:4000/samples/syncflow","description":"Create a new sync flow","headline":"Create a new sync flow","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <!--<link rel="stylesheet" href="/assets/css/style.css?v=0382b7a159e5073bd07097ed0e7cf02cd7499a1e">-->
-    <!--<link rel="stylesheet" href="/assets/css/list.css?v=0382b7a159e5073bd07097ed0e7cf02cd7499a1e">-->
+    <!--<link rel="stylesheet" href="/assets/css/style.css?v=421e1892d772705cfb5e3da4cae91f83bd22b7a4">-->
+    <!--<link rel="stylesheet" href="/assets/css/list.css?v=421e1892d772705cfb5e3da4cae91f83bd22b7a4">-->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/simple-sidebar.css">
 
@@ -142,6 +142,125 @@
             <div class="col-10">
                 <br><br><br>
                 <h1 id="create-a-new-sync-flow">Create a new sync flow</h1>
+
+<p>The Framework Bundle allows us to specify whether our endpoint will behave in a synchronous or asynchronous manner. 
+Synchronous flows expect to recieve a request, make a request and then provide a response while maintaining the initial connection. 
+This is generally used in GET requests, where information is required at the time of the request. 
+Specifying whether a flow is synchronous or asynchronous should be tied to the API endpoint that we expose for the entry point to the flow, however, 
+in the Skeleton Bundle we are not doing this in the best manner, but instead we make this decision simply in the Controller or the Command instead of an API configuration.</p>
+
+<p>This is “faked” somewhat in the Skeleton Bundle as we have a Symfony Command that allows us to trigger a synchronous flow, 
+and also in our Controller <code class="highlighter-rouge">Controller/ApiController.php</code> we make the assumption that whenever we receive a GET request, 
+this is for a synchronous flow and if we receive a POST request, that that is for an asynchronous request.
+Both the Command and the Controller make a call to the <code class="highlighter-rouge">Services/RequestHandlerService.php</code> Service that handles the requests to the enpoint factory. 
+This will be clarified below with code samples.</p>
+
+<p>In the Skeleton Bundle we define our flow <code class="highlighter-rouge">Ping.xml</code> as follows:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:camel=</span><span class="s">"http://camel.apache.org/schema/spring"</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;camelContext</span> <span class="na">trace=</span><span class="s">"false"</span> <span class="na">xmlns=</span><span class="s">"http://camel.apache.org/schema/spring"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;route&gt;</span>
+            <span class="nt">&lt;from</span> <span class="na">uri=</span><span class="s">"api://execute/skeleton/v0/ping"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;to</span> <span class="na">uri=</span><span class="s">"rest://remote_system_api/sendPingMessage"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/route&gt;</span>
+    <span class="nt">&lt;/camelContext&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>This will route to our <code class="highlighter-rouge">remote_system_api</code> producer. To understand more about how to create that producer please see the documentation “Create a new JSON Producer”.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="s1">'GET'</span> <span class="o">==</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">())</span> <span class="p">{</span><span class="c1">//assumed always sync for demo
+</span><span class="o">....</span>
+<span class="nv">$responseMessage</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="nv">$methodName</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="o">....</span>
+
+</code></pre></div></div>
+<p>Where the third parameter “false” tells the called functions that <code class="highlighter-rouge">async = false</code>.</p>
+
+<p>The main call to the service is placed in function in the Controller called <code class="highlighter-rouge">send</code> .</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">protected</span> <span class="k">function</span> <span class="nf">send</span><span class="p">(</span><span class="nv">$methodName</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="nv">$async</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$requestHandler</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'smartbox_skeleton_request_handler'</span><span class="p">);</span>
+        <span class="nv">$context</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Context</span><span class="p">([</span>
+            <span class="nx">Context</span><span class="o">::</span><span class="na">FLOWS_VERSION</span> <span class="o">=&gt;</span> <span class="s1">'0'</span><span class="p">,</span>
+            <span class="nx">Context</span><span class="o">::</span><span class="na">TRANSACTION_ID</span> <span class="o">=&gt;</span> <span class="nb">uniqid</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="kc">true</span><span class="p">),</span>
+            <span class="nx">Context</span><span class="o">::</span><span class="na">ORIGINAL_FROM</span> <span class="o">=&gt;</span> <span class="s1">'api'</span><span class="p">,</span>
+        <span class="p">]);</span>
+
+        <span class="nv">$responseMessage</span> <span class="o">=</span> <span class="nv">$requestHandler</span><span class="o">-&gt;</span><span class="na">handleCall</span><span class="p">(</span>
+            <span class="s1">'skeleton'</span><span class="p">,</span>
+            <span class="s1">'v0'</span><span class="p">,</span>
+            <span class="nv">$methodName</span><span class="p">,</span>
+            <span class="nv">$data</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="nv">$context</span><span class="p">,</span>
+            <span class="nv">$async</span>
+        <span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$responseMessage</span><span class="p">;</span>
+    <span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>In both our Command and Controller we make a call to the function <code class="highlighter-rouge">handleCall</code> in the <code class="highlighter-rouge">RequestHandlerService</code> Service.</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 
+ <span class="k">public</span> <span class="k">function</span> <span class="nf">handleCall</span><span class="p">(</span>
+         <span class="nv">$serviceName</span><span class="p">,</span>
+         <span class="nv">$apiVersion</span><span class="p">,</span>
+         <span class="nv">$methodName</span><span class="p">,</span>
+         <span class="nv">$messageBody</span><span class="p">,</span>
+         <span class="nv">$messageHeaders</span><span class="p">,</span>
+         <span class="nv">$context</span><span class="p">,</span>
+         <span class="nv">$async</span> <span class="o">=</span> <span class="kc">false</span>
+     <span class="p">)</span> <span class="p">{</span>
+         <span class="nv">$apiPrefix</span> <span class="o">=</span> <span class="s1">'api'</span><span class="p">;</span>
+         <span class="nv">$fromUri</span> <span class="o">=</span> <span class="nv">$apiPrefix</span><span class="o">.</span><span class="s1">'://entry/'</span><span class="o">.</span><span class="nv">$serviceName</span><span class="o">.</span><span class="s1">'/'</span><span class="o">.</span><span class="nv">$apiVersion</span><span class="o">.</span><span class="s1">'/'</span><span class="o">.</span><span class="nv">$methodName</span><span class="p">;</span>
+         <span class="nv">$helper</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getContainer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'smartesb.helper'</span><span class="p">);</span>
+         <span class="nv">$messageFactory</span> <span class="o">=</span> <span class="nv">$helper</span><span class="o">-&gt;</span><span class="na">getMessageFactory</span><span class="p">();</span>
+         <span class="nv">$contextExtra</span> <span class="o">=</span> <span class="p">[];</span>
+         <span class="nv">$contextExtra</span><span class="p">[</span><span class="s1">'from'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$fromUri</span><span class="p">;</span>
+         <span class="nv">$priority</span> <span class="o">=</span> <span class="s1">'normal'</span><span class="p">;</span>
+         <span class="nv">$contextExtra</span><span class="p">[</span><span class="s1">'api_mode'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'real'</span><span class="p">;</span>
+         <span class="nv">$contextExtra</span><span class="p">[</span><span class="s1">'priority'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$priority</span><span class="p">;</span>
+         <span class="nv">$context</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Context</span><span class="p">(</span><span class="nb">array_merge</span><span class="p">(</span><span class="nv">$context</span><span class="o">-&gt;</span><span class="na">toArray</span><span class="p">(),</span> <span class="nv">$contextExtra</span><span class="p">));</span>
+         <span class="nv">$messageHeaders</span><span class="p">[</span><span class="nx">Message</span><span class="o">::</span><span class="na">HEADER_FROM</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$fromUri</span><span class="p">;</span>
+         <span class="nv">$messageHeaders</span><span class="p">[</span><span class="s1">'api_mode'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'real'</span><span class="p">;</span>
+         <span class="nv">$messageHeaders</span><span class="p">[</span><span class="s1">'async'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$async</span> <span class="o">?</span> <span class="s1">'true'</span> <span class="o">:</span> <span class="s1">'false'</span><span class="p">;</span>
+         <span class="nv">$message</span> <span class="o">=</span> <span class="nv">$messageFactory</span><span class="o">-&gt;</span><span class="na">createMessage</span><span class="p">(</span><span class="nv">$messageBody</span><span class="p">,</span> <span class="nv">$messageHeaders</span><span class="p">,</span> <span class="nv">$context</span><span class="p">);</span>
+         <span class="nv">$endpoint</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getContainer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'smartesb.endpoint_factory'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">createEndpoint</span><span class="p">(</span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="nx">Message</span><span class="o">::</span><span class="na">HEADER_FROM</span><span class="p">),</span> <span class="nx">EndpointFactory</span><span class="o">::</span><span class="na">MODE_CONSUME</span><span class="p">);</span>
+         <span class="nv">$resultMessage</span> <span class="o">=</span> <span class="nv">$endpoint</span><span class="o">-&gt;</span><span class="na">handle</span><span class="p">(</span><span class="nv">$message</span><span class="p">);</span>
+ 
+         <span class="k">return</span> <span class="nv">$resultMessage</span><span class="p">;</span>
+     <span class="p">}</span>
+ 
+</code></pre></div></div>
+
+<p>As you can see our default is to make a synchronous call. 
+In this function we set the message header <code class="highlighter-rouge">$messageHeaders['async']</code> which will be later interpreted by the Service <code class="highlighter-rouge">smartesb.endpoint_factory</code>).</p>
+
+<p>This same call call is made from the Symfony Command: <code class="highlighter-rouge">Command/SkeletonSendPingCommand.php</code>.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$responseMessage</span> <span class="o">=</span> <span class="nv">$requestHandler</span><span class="o">-&gt;</span><span class="na">handleCall</span><span class="p">(</span>
+            <span class="s1">'skeleton'</span><span class="p">,</span>
+            <span class="s1">'v0'</span><span class="p">,</span>
+            <span class="s1">'ping'</span><span class="p">,</span>
+            <span class="nv">$pingMessage</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="nv">$context</span><span class="p">,</span>
+            <span class="kc">false</span>
+        <span class="p">);</span>
+        
+</code></pre></div></div>
+
+<p>So, to sum up, the deciding factor between a synchronous flow and asynchronous flow is simply a message header that we set. 
+This should be associated with an api configuration but currently in the Skeleton Bundle we are not doing this. 
+The RequestHandlerService in the Skeleton Bundle handles the creation and preparation of the message to be passed to the Enpoint Factory.</p>
 
             </div>
             <div class="col-1">
