@@ -1,5 +1,6 @@
 ---
 name: Installation and Setup Guide
+title: Installation and Setup Guide
 permalink: introduction/installation
 ---
 
