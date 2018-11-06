@@ -65,4 +65,4 @@ Try to keep to the following guidelines.
 
 ## Licence
 
-This bundle is distributed under [MIT license](/license). © Mel McCann 2018
+This bundle is distributed under [MIT license](license). © Mel McCann 2018
