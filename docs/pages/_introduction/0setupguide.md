@@ -9,18 +9,18 @@ permalink: introduction/installation
 ## Configure
 
 To get the framework up and running we will make the following assumptions regarding software that we will be using:
-* Queuing system : RabbitMQ
-* Database: MySql
-* Process Control: Supervisor
-* WebServer: Apache + PHP 7.0
+* **Queuing system**: RabbitMQ
+* **Database**: MySql
+* **Process Control**: Supervisor
+* **WebServer**: Apache + PHP 7.0
 
 
 
 ### Composer Dependencies
 To simplify our setup we will install all the related Smartbox bundles
-Add the following to composer.json and run ```composer install```
+Add the following to composer.json and run `composer install`
 
-```yaml
+```json
 "smartbox/core-bundle": "^1.0.0",
 "smartbox/integration-framework-bundle": "^1.20.4",
 "smartbox/camel-config-bundle": "^1.0.0",
@@ -38,7 +38,7 @@ To update to the latest smartbox bundle versions please run
 
 ### Webserver Setup
 
-#### Apache, MySql and PHP Stack on Ubuntu
+Install all the necessary dependencies on Ubuntu: Apache, MySql and PHP Stack.
 
 ```bash
 sudo apt-get install -y mysql-server mysql-client
@@ -52,16 +52,14 @@ sudo apt-get install -y php7.0-curl php7.0-xml php7.0-soap php-apcu php-apcu-bc
 
 ### RabbitMQ
 
-#### RabbitMQ Setup on Ubuntu
+Install and configure RabbitMQ. This will:
+* Setup RabbitMQ on Ubuntu
+* Add an administrator called "mel" with the password "mel".
+* Allow remote access to the management console.
+* And finally it will add rabbitmq.local to /etc/hosts
+
 
 ```bash 
-# rabbitmq.sh
-# This will:
-# Setup RabbitMQ on Ubuntu
-# Add an administrator called "mel" with the password "mel".
-# Allow remote access to the management console.
-# And finally it will add rabbitmq.local to /etc/hosts
- 
 sudo apt-get install rabbitmq-server
 rabbitmq-plugins enable rabbitmq_management
 rabbitmq-plugins enable rabbitmq_stomp
@@ -71,21 +69,19 @@ rabbitmqctl set_permissions -p / mel "." "." ".*"
 sudo touch /etc/rabbitmq/rabbitmq.config
 echo "[{rabbit, [{loopback_users, []}]}]." | sudo tee /etc/rabbitmq/rabbitmq.config
 echo -e "\n127.0.0.1	rabbitmq.local" | sudo tee -a /etc/hosts
-
 ```
-
-
 
 ### Adding Workers with Supervisor
 
-#### Install Supervisor on Ubuntu
+Install Supervisor on Ubuntu:
+
 ```bash
 sudo apt-get install supervisor
 ```
 
-#### Create a worker configuration
+#### Create a worker configuration:
 
-To create a consumer that will be controlled by supervisord, we can add a .conf file to the supervisor configurations directory. For example:
+To create a consumer that will be controlled by Supervisor, we can add a .conf file to the supervisor configurations directory. For example:
  
     /etc/supervisor/conf.d/SuperHardWorker.conf
  
@@ -104,4 +100,4 @@ stderr_logfile = /home/mel/stderr.log
 startretries = 10
 user = mel
  ```
-Note that the value ```numprocs=10``` means that supervisor will attempt to always run 10 instances/processes of the program.
+Note that the value `numprocs=10` means that supervisor will attempt to always run 10 instances/processes of the program.
