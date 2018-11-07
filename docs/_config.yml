@@ -17,6 +17,7 @@ defaults:
     path: ""
   values:
     layout: "default"
+baseurl: '/smartbox-skeleton'
 
 markdown: kramdown
 highlighter: rouge
