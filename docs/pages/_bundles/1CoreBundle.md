@@ -1,4 +1,5 @@
 ---
+name: CoreBundle
 title: CoreBundle
 permalink: bundles/corebundle
 ---
