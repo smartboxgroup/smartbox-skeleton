@@ -11,6 +11,11 @@ smartbox_integration_framework:
         pingToRemoteApi:
             message: obj.getMessage()
             time: obj.getTimestamp()
+
+        pingCallbackToOriginatingSystem:
+            message: obj.getMessage()
+            originalTime: obj.getTimestamp()
+
     producers:
         remote_system_api:
             class: SmartboxSkeletonBundle\Producers\RemoteSystemApiProducer
@@ -47,3 +52,16 @@ smartbox_integration_framework:
                                 display_message: true
                     response:
                         body: "eval: responses['sendPingMessage']['body']"
+
+                sendPingCallback:
+                    description: 'Send ping to a remote api'
+                    steps:
+                      - define:
+                          PingCallback: "eval: body"
+                      - request:
+                          name: sendPingCallback
+                          http_method: POST
+                          uri: /smartbox-skeleton/web/pingCallback
+                          body: "eval: mapper.map(PingCallback, 'pingCallbackToOriginatingSystem')"
+                    response:
+                        body: "eval: responses['sendPingCallback']['body']"

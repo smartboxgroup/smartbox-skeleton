@@ -5,3 +5,7 @@ smartbox_skeleton_homepage:
 smartbox_skeleton_api:
     path:     /api/{methodName}
     defaults: { _controller: SmartboxSkeletonBundle:Api:api,"methodName" : "" }
+
+smartbox_skeleton_callback:
+    path:     /pingCallback
+    defaults: { _controller: SmartboxSkeletonBundle:Api:pingCallback }
