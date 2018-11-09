@@ -1,6 +1,6 @@
 {
-    "name": "smartbox/skeleton-bundle",
-    "description": "Smartbox Integrations Framework Skeleton Bundle",
+    "name": "smartbox/smartesb-skeleton",
+    "description": "SmartESB Skeleton Bundle",
     "license": "MIT",
     "type": "project",
     "autoload": {
