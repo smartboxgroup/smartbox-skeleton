@@ -60,7 +60,7 @@ This could be modified to look like the following..
             </pipeline>
             <pipeline>
                 <to uri="service://databaseService/savePingMessage">
-                    <description>Saves a poing message to the database</description>
+                    <description>Saves a ping message to the database</description>
                 </to>
             </pipeline>
         </multicast>

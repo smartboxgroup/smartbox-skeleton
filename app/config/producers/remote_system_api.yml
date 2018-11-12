@@ -43,7 +43,7 @@ smartbox_integration_framework:
                       - request:
                           name: sendPingMessage
                           http_method: POST
-                          uri: /smartbox-skeleton/web/remote/pong
+                          uri: /smartesb-skeleton/web/remote/pong
                           body: "eval: mapper.map(PingMessage, 'pingToRemoteApi')"
                           validations:
                               - rule: "eval: responses['sendPingMessage']['statusCode'] == 200"
@@ -53,6 +53,24 @@ smartbox_integration_framework:
                     response:
                         body: "eval: responses['sendPingMessage']['body']"
 
+                logContent:
+                    description: 'Log some data'
+                    steps:
+                      - define:
+                          Message: "eval: body"
+                      - request:
+                          name: logContent
+                          http_method: POST
+                          uri: /smartesb-skeleton/web/remote/logContent
+                          body: "eval: Message"
+                          validations:
+                              - rule: "eval: responses['sendPingMessage']['statusCode'] == 200"
+                                message: "eval: 'Enexpected response from Web Api: ' ~ responses['sendPingMessage']['statusCode']"
+                                recoverable: true
+                                display_message: true
+                    response:
+                        body: ~
+
                 sendPingCallback:
                     description: 'Send ping to a remote api'
                     steps:
@@ -61,7 +79,7 @@ smartbox_integration_framework:
                       - request:
                           name: sendPingCallback
                           http_method: POST
-                          uri: /smartbox-skeleton/web/pingCallback
+                          uri: /smartesb-skeleton/web/pingCallback
                           body: "eval: mapper.map(PingCallback, 'pingCallbackToOriginatingSystem')"
                     response:
                         body: "eval: responses['sendPingCallback']['body']"

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="api://execute/skeleton/v0/broadcastping"/>
+            <multicast strategyRef="fireAndForget">
+                <pipeline>
+                    <to uri="rest://remote_system_api/sendPingMessage">
+                        <description>Sends a ping message to remote_system_api</description>
+                    </to>
+                </pipeline>
+                <pipeline>
+                    <to uri="rest://remote_system_api/doNothing">
+                        <description>Saves a ping message to the database</description>
+                    </to>
+                </pipeline>
+            </multicast>
+        </route>
+    </camelContext>
+
+</beans>
