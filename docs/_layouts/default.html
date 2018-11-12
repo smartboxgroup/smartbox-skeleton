@@ -59,17 +59,6 @@
                         {% endfor %}
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Other
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% for collection in site.other %}
-                           <a class="dropdown-item" href="{{ collection.permalink | relative_url}}">{{ collection.name }}</a>
-                        {% endfor %}
-                    </div>
-                </li>
-
                 <a class="nav-item nav-link" href="{{ 'roadmap' | relative_url}}">Roadmap</a>
 
             </ul>
