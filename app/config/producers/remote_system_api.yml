@@ -38,7 +38,7 @@ smartbox_integration_framework:
                       - request:
                           name: sendPingMessage
                           http_method: POST
-                          uri: /smartbox-skeleton/web/remote/pong
+                          uri: /smartesb-skeleton/web/remote/pong
                           body: "eval: mapper.map(PingMessage, 'pingToRemoteApi')"
                           validations:
                               - rule: "eval: responses['sendPingMessage']['statusCode'] == 200"
