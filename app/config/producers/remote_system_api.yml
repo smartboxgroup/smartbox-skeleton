@@ -64,12 +64,12 @@ smartbox_integration_framework:
                           uri: /smartesb-skeleton/web/remote/logContent
                           body: "eval: Message"
                           validations:
-                              - rule: "eval: responses['sendPingMessage']['statusCode'] == 200"
-                                message: "eval: 'Enexpected response from Web Api: ' ~ responses['sendPingMessage']['statusCode']"
+                              - rule: "eval: responses['logContent']['statusCode'] == 200"
+                                message: "eval: 'Enexpected response from Web Api: ' ~ responses['logContent']['statusCode']"
                                 recoverable: true
                                 display_message: true
                     response:
-                        body: ~
+                        body: "eval: responses['logContent']['body']"
 
                 sendPingCallback:
                     description: 'Send ping to a remote api'

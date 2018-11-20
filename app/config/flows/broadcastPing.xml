@@ -15,8 +15,13 @@
                     </to>
                 </pipeline>
                 <pipeline>
-                    <to uri="rest://remote_system_api/doNothing">
-                        <description>Saves a ping message to the database</description>
+                    <to uri="rest://remote_system_api/logContent" customId="true" id="doNothingWithPing">
+                        <description>Sends a ping message to remote_system_api</description>
+                    </to>
+                </pipeline>
+                <pipeline>
+                    <to uri="service://smartesb_skeleton_dummy_service/doNothing">
+                        <description>Sends a ping message to a method in a service.</description>
                     </to>
                 </pipeline>
             </multicast>

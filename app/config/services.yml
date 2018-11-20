@@ -4,13 +4,13 @@ parameters:
     #parameter_name: value
 
 services:
-     smartbox_skeleton_persistence:
-        class: SmartboxSkeletonBundle\Services\PersistenceService
-        arguments: ["@logger","@kernel","@doctrine.orm.default_entity_manager"]
+     smartesb_skeleton_dummy_service:
+        class: SmartboxSkeletonBundle\Services\DummyService
+        arguments: ["@logger","@kernel"]
         tags:
             - { name: monolog.logger, channel: skeleton }
 
-     smartbox_skeleton_request_handler:
+     smartesb_skeleton_request_handler:
         class: SmartboxSkeletonBundle\Services\RequestHandlerService
         arguments: ["@kernel"]
         tags:

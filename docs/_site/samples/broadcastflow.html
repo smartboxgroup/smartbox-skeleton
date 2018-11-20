@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>Create a new broadcast flow | smartbox-skeleton</title>
+<title>Create a new broadcast flow | smartesb-skeleton</title>
 <meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Create a new broadcast flow" />
 <meta property="og:locale" content="en_US" />
@@ -13,18 +13,18 @@
 <meta property="og:description" content="Create a new broadcast flow" />
 <link rel="canonical" href="http://localhost:4000/smartesb-skeleton/samples/broadcastflow" />
 <meta property="og:url" content="http://localhost:4000/smartesb-skeleton/samples/broadcastflow" />
-<meta property="og:site_name" content="smartbox-skeleton" />
+<meta property="og:site_name" content="smartesb-skeleton" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-11-12T18:39:51+00:00" />
+<meta property="article:published_time" content="2018-11-20T15:45:38+00:00" />
 <script type="application/ld+json">
-{"description":"Create a new broadcast flow","@type":"BlogPosting","url":"http://localhost:4000/smartesb-skeleton/samples/broadcastflow","headline":"Create a new broadcast flow","dateModified":"2018-11-12T18:39:51+00:00","datePublished":"2018-11-12T18:39:51+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/smartesb-skeleton/samples/broadcastflow"},"@context":"http://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/smartesb-skeleton/samples/broadcastflow"},"@type":"BlogPosting","url":"http://localhost:4000/smartesb-skeleton/samples/broadcastflow","headline":"Create a new broadcast flow","dateModified":"2018-11-20T15:45:38+00:00","datePublished":"2018-11-20T15:45:38+00:00","description":"Create a new broadcast flow","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="/smartesb-skeleton/assets/css/syntax.css?v=3164eff58c954f7894832f26417a7c8c5b817665">
+        <link rel="stylesheet" href="/smartesb-skeleton/assets/css/syntax.css?v=53946728a90dfcf4333bb63cf3599997e8c71930">
         <link rel="stylesheet" href="/smartesb-skeleton/assets/css/timeline.css">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -179,6 +179,54 @@ A potential use case for this type of flow would be if we need to update product
 </code></pre></div></div>
 <p>As you can see if is quite simple to take advantage of this powerful feature. 
 The above example broadcasts to multiple routes, including sending a soap request, multiple rest requests and finally calling an internal service to save the message in a database.</p>
+
+<p>In the Skeleton Bundle, our example broadcast flow is as follows:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="na">xmlns:camel=</span><span class="s">"http://camel.apache.org/schema/spring"</span>
+       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;camelContext</span> <span class="na">trace=</span><span class="s">"false"</span> <span class="na">xmlns=</span><span class="s">"http://camel.apache.org/schema/spring"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;route&gt;</span>
+            <span class="nt">&lt;from</span> <span class="na">uri=</span><span class="s">"api://execute/skeleton/v0/broadcastping"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;multicast</span> <span class="na">strategyRef=</span><span class="s">"fireAndForget"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;pipeline&gt;</span>
+                    <span class="nt">&lt;to</span> <span class="na">uri=</span><span class="s">"rest://remote_system_api/sendPingMessage"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;description&gt;</span>Sends a ping message to remote_system_api<span class="nt">&lt;/description&gt;</span>
+                    <span class="nt">&lt;/to&gt;</span>
+                <span class="nt">&lt;/pipeline&gt;</span>
+                <span class="nt">&lt;pipeline&gt;</span>
+                    <span class="nt">&lt;to</span> <span class="na">uri=</span><span class="s">"rest://remote_system_api/logContent"</span> <span class="na">customId=</span><span class="s">"true"</span> <span class="na">id=</span><span class="s">"doNothingWithPing"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;description&gt;</span>Sends a ping message to remote_system_api<span class="nt">&lt;/description&gt;</span>
+                    <span class="nt">&lt;/to&gt;</span>
+                <span class="nt">&lt;/pipeline&gt;</span>
+                <span class="nt">&lt;pipeline&gt;</span>
+                    <span class="nt">&lt;to</span> <span class="na">uri=</span><span class="s">"service://smartesb_skeleton_dummy_service/doNothing"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;description&gt;</span>Sends a ping message to a method in a service.<span class="nt">&lt;/description&gt;</span>
+                    <span class="nt">&lt;/to&gt;</span>
+                <span class="nt">&lt;/pipeline&gt;</span>
+            <span class="nt">&lt;/multicast&gt;</span>
+        <span class="nt">&lt;/route&gt;</span>
+    <span class="nt">&lt;/camelContext&gt;</span>
+
+<span class="nt">&lt;/beans&gt;</span>
+
+</code></pre></div></div>
+<p>Although this is a basic example, it is enough to see a broadcast flow in action. 
+To invoke this flow, run the command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php app/dev_console skeleton:send:broadcast-ping
+</code></pre></div></div>
+
+<p>And then consume the messages:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> php app/dev_console smartesb:consumer:start queue://api/normal/skeleton/v0/broadcastping
+</code></pre></div></div>
+<p>Nothing exciting happens here as it is a basic example, however, 
+ once you replace these target systems with your own you will get an appreciation for the broadcast flow.</p>
+
 
                 </div>
                 <div class="col-1">

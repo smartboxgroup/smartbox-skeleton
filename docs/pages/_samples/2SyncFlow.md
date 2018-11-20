@@ -53,7 +53,7 @@ The main call to the service is placed in function in the Controller called ``` 
 
 protected function send($methodName, $data, $async)
     {
-        $requestHandler = $this->get('smartbox_skeleton_request_handler');
+        $requestHandler = $this->get('smartesb_skeleton_request_handler');
         $context = new Context([
             Context::FLOWS_VERSION => '0',
             Context::TRANSACTION_ID => uniqid('', true),
