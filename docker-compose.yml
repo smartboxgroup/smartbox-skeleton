@@ -11,6 +11,7 @@ services:
       - redis
       - rabbit.local
     environment:
+      SYMFONY_PHPUNIT_VERSION: 7.4
       SYMFONY_DEPRECATIONS_HELPER: weak_vendors
 
   nginx:

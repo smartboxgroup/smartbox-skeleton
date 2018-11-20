@@ -70,7 +70,7 @@ assets: vendor
 ##
 
 tests: ## Run flow tests
-tests: vendor clear-cache
+tests: vendor
 	$(EXEC_PHP) bin/simple-phpunit --stop-on-failure
 
 .PHONY: tests
