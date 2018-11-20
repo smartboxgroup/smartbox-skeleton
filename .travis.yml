@@ -31,7 +31,7 @@ before_script:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - SYMFONY_DEPRECATIONS_HELPER=weak bin/phpunit --debug --coverage-clover ./test/clover.xml
+  - SYMFONY_DEPRECATIONS_HELPER=weak_vendors bin/simple-phpunit --debug --coverage-clover ./test/clover.xml
 
 after_script:
   - composer require php-coveralls/php-coveralls:^2.0
