@@ -31,6 +31,6 @@ parameters:
     default.queues.retry: retry
     default.queues.throttle: throttle
 
-    remote_system_api.base.uri: 'http://localhost'
+    remote_system_api.base.uri: nginx
     remote_system_api.username: 'mel'
     remote_system_api.password: 'mel'
