@@ -7,10 +7,8 @@ use Smartbox\CoreBundle\Type\Entity;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
- * Class Result
- * @package SmartboxSkeletonBundle\Entity
+ * Class Result.
  */
 class Result extends Entity implements SerializableInterface
 {

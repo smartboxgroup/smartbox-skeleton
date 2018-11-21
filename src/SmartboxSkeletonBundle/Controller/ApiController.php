@@ -13,6 +13,7 @@ class ApiController extends Controller
     /**
      * @param Request $request
      * @param $methodName
+     *
      * @return Response
      */
     public function apiAction(Request $request, $methodName)
@@ -60,28 +61,27 @@ class ApiController extends Controller
     }
 
     /**
-     *
      * This function just accepts the request, logs it and always returns a 200.
      *
      * @param Request $request
+     *
      * @return Response
      */
     public function pingCallbackAction(Request $request)
     {
-
         $logger = $this->get('logger');
         $content = $request->getContent();
-        $logContent = json_encode($content);
+        $logContent = \json_encode($content);
         $logger->info($logContent);
+
         return new Response('{"status":"ok"}', Response::HTTP_OK, array('Content-Type' => 'application/json'));
-
     }
-
 
     /**
      * @param $methodName
      * @param $data
      * @param $async
+     *
      * @return mixed
      */
     protected function send($methodName, $data, $async)
@@ -89,7 +89,7 @@ class ApiController extends Controller
         $requestHandler = $this->get('smartesb_skeleton_request_handler');
         $context = new Context([
             Context::FLOWS_VERSION => '0',
-            Context::TRANSACTION_ID => uniqid('', true),
+            Context::TRANSACTION_ID => \uniqid('', true),
             Context::ORIGINAL_FROM => 'api',
         ]);
 

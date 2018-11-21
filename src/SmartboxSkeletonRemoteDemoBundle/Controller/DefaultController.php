@@ -26,22 +26,20 @@ class DefaultController extends Controller
         return new Response($json, 200, array('Content-Type' => 'application/json'));
     }
 
-
     /**
-     *
      * This function just accepts the request, logs it and always returns a 200.
      *
      * @param Request $request
+     *
      * @return Response
      */
     public function logContentAction(Request $request)
     {
-
         $logger = $this->get('logger');
         $content = $request->getContent();
-        $logContent = json_encode($content);
+        $logContent = \json_encode($content);
         $logger->info($logContent);
-        return new Response('{"status":"ok"}', Response::HTTP_OK, array('Content-Type' => 'application/json'));
 
+        return new Response('{"status":"ok"}', Response::HTTP_OK, array('Content-Type' => 'application/json'));
     }
 }

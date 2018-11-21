@@ -7,8 +7,7 @@ use Smartbox\CoreBundle\Type\Entity;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * Class PingMessage
- * @package SmartboxSkeletonBundle\Entity
+ * Class PingMessage.
  */
 class PingMessage extends Entity implements SerializableInterface
 {

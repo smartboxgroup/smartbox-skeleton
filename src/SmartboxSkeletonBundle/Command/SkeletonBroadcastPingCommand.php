@@ -18,6 +18,12 @@ class SkeletonBroadcastPingCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $requestHandler = $this->getContainer()->get('smartesb_skeleton_request_handler');
@@ -28,7 +34,7 @@ class SkeletonBroadcastPingCommand extends ContainerAwareCommand
 
         $context = new Context([
             Context::FLOWS_VERSION => '0',
-            Context::TRANSACTION_ID => uniqid('', true),
+            Context::TRANSACTION_ID => \uniqid('', true),
             Context::ORIGINAL_FROM => 'api',
         ]);
 
