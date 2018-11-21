@@ -14,6 +14,7 @@ use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use JMS\Serializer\SerializerInterface;
+use PHPUnit\Framework\TestCase;
 use Smartbox\Integration\FrameworkBundle\Components\WebService\ConfigurableWebserviceProtocol;
 use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\Exceptions\RecoverableRestException;
 use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\Exceptions\RestException;
@@ -23,7 +24,7 @@ use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\RestConfigur
 use Smartbox\Integration\FrameworkBundle\Configurability\ConfigurableServiceHelper;
 use Smartbox\Integration\FrameworkBundle\Tools\Evaluator\ExpressionEvaluator;
 
-class RemoteSystemApiProducerTest extends \PHPUnit_Framework_TestCase
+class RemoteSystemApiProducerTest extends TestCase
 {
 
     /** @var ClientInterface|\PHPUnit_Framework_MockObject_MockObject */
