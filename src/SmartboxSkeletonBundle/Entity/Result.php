@@ -1,16 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartboxSkeletonBundle\Entity;
 
-use Smartbox\CoreBundle\Type\SerializableInterface;
-use Smartbox\CoreBundle\Type\Entity;
 use JMS\Serializer\Annotation as JMS;
+use Smartbox\CoreBundle\Type\Entity;
+use Smartbox\CoreBundle\Type\SerializableInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
- * Class Result
- * @package SmartboxSkeletonBundle\Entity
+ * Class Result.
  */
 class Result extends Entity implements SerializableInterface
 {

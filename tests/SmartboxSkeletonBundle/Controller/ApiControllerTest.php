@@ -1,22 +1,27 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: mel
  * Date: 16/09/18
- * Time: 17:29
+ * Time: 17:29.
  */
 
 namespace SmartboxSkeletonBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use SmartboxSkeletonBundle\Entity\PingMessage;
 use JMS\Serializer\SerializerBuilder;
 use Smartbox\Integration\FrameworkBundle\Command\ConsumeCommand;
 use Smartbox\Integration\FrameworkBundle\Components\Queues\QueueConsumer;
+use SmartboxSkeletonBundle\Entity\PingMessage;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
+/**
+ * @internal
+ */
 class ApiControllerTest extends WebTestCase
 {
     const NB_MESSAGES = 1;
@@ -30,10 +35,10 @@ class ApiControllerTest extends WebTestCase
         $pingMessage = new PingMessage();
         $now = new \DateTime();
         $pingMessage->setTimestamp($now->getTimestamp());
-        $pingMessage->setMessage("Ping");
+        $pingMessage->setMessage('Ping');
         $serializer = SerializerBuilder::create()->build();
         $content = $serializer->serialize($pingMessage, 'json');
-        $client->request('POST', '/api/asyncping', [],[],[], $content );
+        $client->request('POST', '/api/asyncping', [], [], [], $content);
 
         $this->assertContains('Accepted (Will be performed asynchronously)', $client->getResponse()->getContent());
 
@@ -46,21 +51,19 @@ class ApiControllerTest extends WebTestCase
         $application->add(new ConsumeCommand());
         $command = $application->find('smartesb:consumer:start');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array(
+        $commandTester->execute([
             'command' => $command->getName(),
             'uri' => self::URI, // argument
             '--killAfter' => self::NB_MESSAGES, // option
-        ));
+        ]);
 
         $output = $commandTester->getDisplay();
         $this->assertContains('limited to', $output);
         $this->assertContains('Consumer was gracefully stopped', $output);
-
     }
 
     public function setMockConsumer($expirationCount)
     {
-
         $this->mockConsumer = $this
             ->getMockBuilder(QueueConsumer::class)
             ->setMethods(['consume', 'setExpirationCount'])
@@ -75,5 +78,4 @@ class ApiControllerTest extends WebTestCase
         $this->container->set('smartesb.consumers.queue', $this->mockConsumer);
         $this->container->set('doctrine', $this->createMock(RegistryInterface::class));
     }
-
 }

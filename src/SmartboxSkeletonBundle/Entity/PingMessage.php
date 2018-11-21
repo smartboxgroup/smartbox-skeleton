@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartboxSkeletonBundle\Entity;
 
-use Smartbox\CoreBundle\Type\SerializableInterface;
-use Smartbox\CoreBundle\Type\Entity;
 use JMS\Serializer\Annotation as JMS;
+use Smartbox\CoreBundle\Type\Entity;
+use Smartbox\CoreBundle\Type\SerializableInterface;
 
 /**
- * Class PingMessage
- * @package SmartboxSkeletonBundle\Entity
+ * Class PingMessage.
  */
 class PingMessage extends Entity implements SerializableInterface
 {
