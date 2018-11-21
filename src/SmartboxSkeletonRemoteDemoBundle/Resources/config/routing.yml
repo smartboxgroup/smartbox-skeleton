@@ -5,3 +5,7 @@ smartbox_skeleton_remote_demo_homepage:
 smartbox_skeleton_remote_demo_pong:
     path:     /pong
     defaults: { _controller: SmartboxSkeletonRemoteDemoBundle:Default:pong }
+
+smartbox_skeleton_remote_log_content:
+    path:     /logContent
+    defaults: { _controller: SmartboxSkeletonRemoteDemoBundle:Default:logContent }

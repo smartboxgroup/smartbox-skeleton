@@ -71,3 +71,56 @@ This could be modified to look like the following..
 ```
 As you can see if is quite simple to take advantage of this powerful feature. 
 The above example broadcasts to multiple routes, including sending a soap request, multiple rest requests and finally calling an internal service to save the message in a database.
+
+In the Skeleton Bundle, our example broadcast flow is as follows:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="api://execute/skeleton/v0/broadcastping"/>
+            <multicast strategyRef="fireAndForget">
+                <pipeline>
+                    <to uri="rest://remote_system_api/sendPingMessage">
+                        <description>Sends a ping message to remote_system_api</description>
+                    </to>
+                </pipeline>
+                <pipeline>
+                    <to uri="rest://remote_system_api/logContent" customId="true" id="doNothingWithPing">
+                        <description>Sends a ping message to remote_system_api</description>
+                    </to>
+                </pipeline>
+                <pipeline>
+                    <to uri="service://smartesb_skeleton_dummy_service/doNothing">
+                        <description>Sends a ping message to a method in a service.</description>
+                    </to>
+                </pipeline>
+            </multicast>
+        </route>
+    </camelContext>
+
+</beans>
+
+```
+Although this is a basic example, it is enough to see a broadcast flow in action. 
+To invoke this flow, run the command:
+
+```bash
+php app/dev_console skeleton:send:broadcast-ping
+ ```
+ 
+ And then consume the messages:
+ ```bash
+ php app/dev_console smartesb:consumer:start queue://api/normal/skeleton/v0/broadcastping
+ ```
+ Nothing exciting happens here as it is a basic example, however, 
+ once you replace these target systems with your own you will get an appreciation for the broadcast flow.
+ 
+ 
+ 
