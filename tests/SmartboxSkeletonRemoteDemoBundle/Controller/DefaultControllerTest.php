@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartboxSkeletonRemoteDemoBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use JMS\Serializer\SerializerBuilder;
-use SmartboxSkeletonBundle\Entity\PingMessage;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ */
 class DefaultControllerTest extends WebTestCase
 {
     public function testIndex()
@@ -23,7 +27,7 @@ class DefaultControllerTest extends WebTestCase
         $client->request('GET', '/remote/pong');
         $content = $client->getResponse()->getContent();
         $serializer = SerializerBuilder::create()->build();
-        $message = $serializer->deserialize($content,'SmartboxSkeletonBundle\Entity\PingMessage','json');
+        $message = $serializer->deserialize($content, 'SmartboxSkeletonBundle\Entity\PingMessage', 'json');
 
         $this->assertSame('Pong', $message->getMessage());
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartboxSkeletonBundle\Services;
 
 use Smartbox\Integration\FrameworkBundle\Core\Exchange;
