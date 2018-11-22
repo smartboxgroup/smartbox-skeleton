@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: mel
  * Date: 16/09/18
- * Time: 18:15
+ * Time: 18:15.
  */
 
 namespace SmartboxSkeletonBundle\Producers;
@@ -19,14 +21,15 @@ use Smartbox\Integration\FrameworkBundle\Components\WebService\ConfigurableWebse
 use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\Exceptions\RecoverableRestException;
 use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\Exceptions\RestException;
 use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\Exceptions\UnrecoverableRestException;
-use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\RestConfigurableProducer;
 use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\RestConfigurableProtocol;
 use Smartbox\Integration\FrameworkBundle\Configurability\ConfigurableServiceHelper;
 use Smartbox\Integration\FrameworkBundle\Tools\Evaluator\ExpressionEvaluator;
 
+/**
+ * @internal
+ */
 class RemoteSystemApiProducerTest extends TestCase
 {
-
     /** @var ClientInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $client;
 
@@ -113,10 +116,10 @@ class RemoteSystemApiProducerTest extends TestCase
 
         $this->assertNotNull($exception);
         $this->assertInstanceOf($expectedException, $exception);
-        $this->assertEquals('TestSystem', $exception->getExternalSystemName());
+        $this->assertSame('TestSystem', $exception->getExternalSystemName());
         /** @var RequestException $originalException */
         $originalException = $exception->getPrevious();
-        $this->assertEquals($statusCode, $originalException->getResponse()->getStatusCode());
+        $this->assertSame($statusCode, $originalException->getResponse()->getStatusCode());
     }
 
     public function getExpectedExceptionsForStatusCodes()

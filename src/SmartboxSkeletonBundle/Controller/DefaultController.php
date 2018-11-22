@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartboxSkeletonBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

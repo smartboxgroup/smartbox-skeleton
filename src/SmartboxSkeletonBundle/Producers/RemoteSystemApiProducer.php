@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartboxSkeletonBundle\Producers;
 
 use Smartbox\Integration\FrameworkBundle\Components\WebService\Rest\RestConfigurableProducer;
@@ -13,7 +15,7 @@ class RemoteSystemApiProducer extends RestConfigurableProducer implements CanChe
     /**
      * {@inheritdoc}
      */
-    public function checkConnectivityForSmokeTest(array $config = array())
+    public function checkConnectivityForSmokeTest(array $config = [])
     {
         //not implemented for now
     }

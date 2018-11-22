@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartboxSkeletonBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use SmartboxSkeletonBundle\Entity\PingMessage;
 use Smartbox\Integration\FrameworkBundle\Core\Messages\Context;
+use SmartboxSkeletonBundle\Entity\PingMessage;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class SkeletonSendAsyncPingCommand extends ContainerAwareCommand
 {
