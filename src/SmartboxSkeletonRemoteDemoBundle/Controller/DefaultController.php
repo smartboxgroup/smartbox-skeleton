@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace SmartboxSkeletonRemoteDemoBundle\Controller;
 
-use SmartboxSkeletonBundle\Entity\PingMessage;
-<<<<<<< HEAD
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-=======
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
->>>>>>> 6b5f7de0c3883d3d0182af2d35efce3ce3305129
+use SmartboxSkeletonBundle\Entity\PingMessage;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DefaultController extends Controller
 {
@@ -29,7 +26,7 @@ class DefaultController extends Controller
         $serializer = $this->get('jms_serializer');
         $json = $serializer->serialize($pingMessage, 'json');
 
-        return new Response($json, 200, ['Content-Type' => 'application/json']);
+        return new Response($json, 200, array('Content-Type' => 'application/json'));
     }
 
     /**
