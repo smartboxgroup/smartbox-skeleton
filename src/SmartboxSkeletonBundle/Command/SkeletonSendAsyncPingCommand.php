@@ -22,7 +22,7 @@ class SkeletonSendAsyncPingCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $requestHandler = $this->getContainer()->get('smartbox_skeleton_request_handler');
+        $requestHandler = $this->getContainer()->get('smartesb_skeleton_request_handler');
         $pingMessage = new PingMessage();
         $now = new \DateTime();
         $pingMessage->setTimestamp($now->getTimestamp());
@@ -30,7 +30,7 @@ class SkeletonSendAsyncPingCommand extends ContainerAwareCommand
 
         $context = new Context([
             Context::FLOWS_VERSION => '0',
-            Context::TRANSACTION_ID => uniqid('', true),
+            Context::TRANSACTION_ID => \uniqid('', true),
             Context::ORIGINAL_FROM => 'api',
         ]);
 

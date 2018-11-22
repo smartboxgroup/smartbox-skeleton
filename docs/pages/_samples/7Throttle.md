@@ -31,3 +31,6 @@ Here is an example of our Async Ping flow being throttled.
 </beans>
 
 ```
+
+This will send 2 messages per second to the target system. 
+Note that in a broadcast we can throttle at different rates to different remote systems.

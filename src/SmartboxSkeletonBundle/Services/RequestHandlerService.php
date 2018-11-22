@@ -15,6 +15,11 @@ class RequestHandlerService
 {
     protected $kernel;
 
+    /**
+     * RequestHandlerService constructor.
+     *
+     * @param $kernel
+     */
     public function __construct($kernel)
     {
         $this->kernel = $kernel;
@@ -49,7 +54,7 @@ class RequestHandlerService
         $priority = 'normal';
         $contextExtra['api_mode'] = 'real';
         $contextExtra['priority'] = $priority;
-        $context = new Context(array_merge($context->toArray(), $contextExtra));
+        $context = new Context(\array_merge($context->toArray(), $contextExtra));
         $messageHeaders[Message::HEADER_FROM] = $fromUri;
         $messageHeaders['api_mode'] = 'real';
         $messageHeaders['async'] = $async ? 'true' : 'false';

@@ -11,6 +11,11 @@ smartbox_integration_framework:
         pingToRemoteApi:
             message: obj.getMessage()
             time: obj.getTimestamp()
+
+        pingCallbackToOriginatingSystem:
+            message: obj.getMessage()
+            originalTime: obj.getTimestamp()
+
     producers:
         remote_system_api:
             class: SmartboxSkeletonBundle\Producers\RemoteSystemApiProducer
@@ -47,3 +52,34 @@ smartbox_integration_framework:
                                 display_message: true
                     response:
                         body: "eval: responses['sendPingMessage']['body']"
+
+                logContent:
+                    description: 'Log some data'
+                    steps:
+                      - define:
+                          Message: "eval: body"
+                      - request:
+                          name: logContent
+                          http_method: POST
+                          uri: /smartesb-skeleton/web/remote/logContent
+                          body: "eval: Message"
+                          validations:
+                              - rule: "eval: responses['logContent']['statusCode'] == 200"
+                                message: "eval: 'Enexpected response from Web Api: ' ~ responses['logContent']['statusCode']"
+                                recoverable: true
+                                display_message: true
+                    response:
+                        body: "eval: responses['logContent']['body']"
+
+                sendPingCallback:
+                    description: 'Send ping to a remote api'
+                    steps:
+                      - define:
+                          PingCallback: "eval: body"
+                      - request:
+                          name: sendPingCallback
+                          http_method: POST
+                          uri: /smartesb-skeleton/web/pingCallback
+                          body: "eval: mapper.map(PingCallback, 'pingCallbackToOriginatingSystem')"
+                    response:
+                        body: "eval: responses['sendPingCallback']['body']"

@@ -10,23 +10,29 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SkeletonSendPingCommand extends ContainerAwareCommand
+class SkeletonBroadcastPingCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('skeleton:send:ping')
-            ->setDescription('Send a synchronous Ping.')
+            ->setName('skeleton:send:broadcast-ping')
+            ->setDescription('Broadcast Pings.')
         ;
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $requestHandler = $this->getContainer()->get('smartesb_skeleton_request_handler');
         $pingMessage = new PingMessage();
         $now = new \DateTime();
         $pingMessage->setTimestamp($now->getTimestamp());
-        $pingMessage->setMessage('Ping');
+        $pingMessage->setMessage('BroadcastPing');
 
         $context = new Context([
             Context::FLOWS_VERSION => '0',
@@ -37,18 +43,15 @@ class SkeletonSendPingCommand extends ContainerAwareCommand
         $responseMessage = $requestHandler->handleCall(
             'skeleton',
             'v0',
-            'ping',
+            'broadcastping',
             $pingMessage,
             [],
             $context,
-            false
+            true
         );
-        $response = $responseMessage->getBody();
+
         $responseContext = $responseMessage->getContext();
         $transactionId = $responseContext->get('transaction_id');
         $output->writeln('Transaction Id: '.$transactionId);
-        $serializer = $this->getContainer()->get('jms_serializer');
-        $json = $serializer->serialize($response, 'json');
-        $output->writeln('Command result.'.$json);
     }
 }
