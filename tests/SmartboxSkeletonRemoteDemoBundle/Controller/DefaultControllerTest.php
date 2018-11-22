@@ -25,6 +25,6 @@ class DefaultControllerTest extends WebTestCase
         $serializer = SerializerBuilder::create()->build();
         $message = $serializer->deserialize($content,'SmartboxSkeletonBundle\Entity\PingMessage','json');
 
-        $this->assertEquals('Pong', $message->getMessage());
+        $this->assertSame('Pong', $message->getMessage());
     }
 }
