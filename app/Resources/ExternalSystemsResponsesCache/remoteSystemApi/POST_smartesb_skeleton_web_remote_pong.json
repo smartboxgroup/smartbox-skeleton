@@ -1,0 +1,23 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": [
+      "Thu, 06 Dec 2018 08:54:46 GMT"
+    ],
+    "Server": [
+      "Apache\/2.4.29 (Ubuntu)"
+    ],
+    "Cache-Control": [
+      "no-cache"
+    ],
+    "Content-Length": [
+      "97"
+    ],
+    "Content-Type": [
+      "application\/json"
+    ]
+  },
+  "body": "{\"_type\":\"SmartboxSkeletonBundle\\\\Entity\\\\PingMessage\",\"message\":\"Pong\",\"timestamp\":\"1544086486\"}",
+  "version": "1.1",
+  "reason": "OK"
+}

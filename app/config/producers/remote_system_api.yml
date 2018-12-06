@@ -4,7 +4,7 @@ services:
         arguments: [{timeout: 0, allow_redirects: false, verify: false}]
         lazy: true
         tags:
-          - { name: mockable.rest_client, mockLocation: "external_system_response_cache_dir%/remoteSystemApi" }
+          - { name: mockable.rest_client, mockLocation: "%external_system_responses_cache_dir%/remoteSystemApi" }
 
 smartbox_integration_framework:
     mappings:
