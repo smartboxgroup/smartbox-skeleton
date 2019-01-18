@@ -7,23 +7,23 @@ addons:
 language: php
 
 php:
-  - 7.0
   - 7.1
   - 7.2
 
 env:
-  - SYMFONY_VERSION=2.7.*
   - SYMFONY_VERSION=2.8.*
 
 matrix:
   allow_failures:
-    - php: 7.2
+    - php: 7.1
 
 before_install:
   - phpenv config-add travis/z_php.ini
   - bash travis/install-apcu-pecl.sh
 
 before_script:
+  - sudo apt-get install librabbitmq-dev
+  - sudo apt-get install php-amqp
   - sudo rabbitmq-plugins enable rabbitmq_stomp
   - sudo service rabbitmq-server restart
   - composer self-update
