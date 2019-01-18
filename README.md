@@ -1,6 +1,6 @@
 Smartbox Integrations Framework Skeleton
 ========
-[![Build Status](https://travis-ci.org/smartboxgroup/smartbox-skeleton.svg?branch=master)](https://travis-ci.org/smartboxgroup/smartbox-skeleton) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/smartboxgroup/smartbox-skeleton/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/smartboxgroup/smartbox-skeleton/?branch=master) [![Coverage Status](https://coveralls.io/repos/github/smartboxgroup/smartbox-skeleton/badge.svg?branch=master)](https://coveralls.io/github/smartboxgroup/smartbox-skeleton?branch=master)
+[![Build Status](https://travis-ci.org/smartboxgroup/smartesb-skeleton.svg?branch=master)](https://travis-ci.org/smartboxgroup/smartbox-skeleton) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/smartboxgroup/smartbox-skeleton/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/smartboxgroup/smartbox-skeleton/?branch=master) [![Coverage Status](https://coveralls.io/repos/github/smartboxgroup/smartbox-skeleton/badge.svg?branch=master)](https://coveralls.io/github/smartboxgroup/smartbox-skeleton?branch=master)
 
 A Symfony project to get you up and running quickly with the Smartbox Enterprise Service Bus.
 This project will demonstrate a bare bones setup of a the Smartbox Open Source bundles.
