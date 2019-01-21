@@ -88,7 +88,7 @@ before_script:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - SYMFONY_PHPUNIT_VERSION=6.5 SYMFONY_DEPRECATIONS_HELPER=weak_vendors bin/simple-phpunit --debug --coverage-clover ./test/clover.xml
+  - SYMFONY_PHPUNIT_VERSION=6.5 SYMFONY_DEPRECATIONS_HELPER=weak_vendors bin/simple-phpunit --debug
 
 after_script:
   - composer require php-coveralls/php-coveralls:^2.0
