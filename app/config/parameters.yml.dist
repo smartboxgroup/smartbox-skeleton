@@ -27,7 +27,7 @@ parameters:
     rabbitmq.password: guest
     rabbitmq.vhost: /
     rabbitmq.timeout: 15
-    default.queues.driver: rabbitmq
+    default.queues.driver: amqp
     default.queues.retry: retry
     default.queues.throttle: throttle
 
