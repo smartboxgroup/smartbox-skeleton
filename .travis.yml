@@ -90,9 +90,5 @@ before_script:
 script:
   - SYMFONY_PHPUNIT_VERSION=6.5 SYMFONY_DEPRECATIONS_HELPER=weak_vendors bin/simple-phpunit --debug
 
-after_script:
-  - composer require php-coveralls/php-coveralls:^2.0
-  - php ./vendor/php-coveralls/php-coveralls/bin/php-coveralls -v
-
 services:
   - rabbitmq
