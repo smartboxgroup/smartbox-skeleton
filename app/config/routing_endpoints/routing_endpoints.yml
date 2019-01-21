@@ -1,14 +1,14 @@
 api_request:
   path: "api://{path}"
   defaults:
-    _protocol: @smartesb.protocols.direct
+    _protocol: '@smartesb.protocols.direct'
   requirements:
     path: "[a-zA-Z0-9/._]+"
 
 queues.main:
   path: "queue://main/{queue}"
   defaults:
-    _protocol: @smartesb.protocols.queue
+    _protocol: '@smartesb.protocols.queue'
     prefix: ""
     queue_driver: '%default.queues.driver%'
   requirements:
@@ -18,7 +18,7 @@ queues.main:
 queues.api:
   path: "queue://api/{queue}"
   defaults:
-    _protocol: @smartesb.protocols.queue
+    _protocol: '@smartesb.protocols.queue'
     queue_driver: '%default.queues.driver%'
     prefix: "%kernel.environment%/api_async/"
   requirements:
@@ -48,7 +48,7 @@ external_systems:
 fixtures.read:
   path: "file.json://fixtures/{type}/{filename}"
   defaults:
-    _protocol: @smartesb.protocols.json_file
+    _protocol: '@smartesb.protocols.json_file'
     base_path: "%fixtures_path%"
   requirements:
     type: "body|headers"

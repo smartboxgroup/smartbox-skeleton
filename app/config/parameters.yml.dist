@@ -22,12 +22,12 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
     host: 'localhost'
     flows.version: 0
-    rabbitmq.hostname: "tcp://rabbit.local:61613"
+    rabbitmq.hostname: "rabbit.local"
     rabbitmq.username: guest
     rabbitmq.password: guest
     rabbitmq.vhost: /
     rabbitmq.timeout: 15
-    default.queues.driver: rabbitmq
+    default.queues.driver: amqp
     default.queues.retry: retry
     default.queues.throttle: throttle
 
