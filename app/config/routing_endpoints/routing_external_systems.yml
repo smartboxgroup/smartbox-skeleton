@@ -1,5 +1,5 @@
 remote_system_api:
   path: "rest://remote_system_api/{method}"
   defaults:
-    _protocol: @smartesb.protocols.configurable.rest
-    _producer: @smartesb.producers.remote_system_api
+    _protocol: '@smartesb.protocols.configurable.rest'
+    _producer: '@smartesb.producers.remote_system_api'
