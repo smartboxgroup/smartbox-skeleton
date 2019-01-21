@@ -22,8 +22,6 @@ before_install:
   - bash travis/install-apcu-pecl.sh
 
 before_script:
-  - sudo apt-get install librabbitmq-dev
-  - sudo apt-get install php-amqp
   - sudo rabbitmq-plugins enable rabbitmq_stomp
   - sudo service rabbitmq-server restart
   - composer self-update
