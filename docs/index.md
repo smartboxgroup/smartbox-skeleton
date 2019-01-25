@@ -20,8 +20,6 @@ For further information on the Smartbox Integration Framework Bundle please read
 
 You can access the Smartbox open source bundle via our [GitHub](https://github.com/smartboxgroup/) or using [Packagist.org](https://packagist.org/packages/smartbox/).
 
-You can access the Smartbox open source bundle via our [GitHub](https://github.com/smartboxgroup/) or using [Packagist.org](https://packagist.org/packages/smartbox/).
-
 ### Getting started:
 The Skeleton Bundle was built to demonstrate the features of the SmartESB, and as such some things are not as they would be in the real world. 
 For example, instead of connecting to an actual remote target system to demonstrate a JSON producer, we connect to a Controller included in this Bundle.
