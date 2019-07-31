@@ -4,6 +4,8 @@ If you want to edit this documentation and test it locally, you'll need to run J
 
 ## Installation
 
+### Ubuntu
+
 First install all the ruby dependencies:
 
 ```bash
@@ -28,10 +30,25 @@ And now just run the Jekyll server
 bundle exec jekyll serve
 ```
 
-Open your browser and go to `http://localhost:4000/smartbox-skeleton/`. Jekyll will detect changes automatically and will rebuild MD files as soon as you save them.
+### Docker
+
+First access the /docs folder inside the project
+```bash
+cd docs/
+```
+
+Then bring up the docker container with Jekyll server
+```bash
+docker-compose up
+```
+
+### For both
+
+Open your browser and go to `http://localhost:4000/smartesb-skeleton/`. Jekyll will detect changes automatically and will rebuild MD files as soon as you save them.
+
+## Styles
 
 Regarding the style that we are using for the GitHub Pages, we are using [Twitter Bootstrap](https://getbootstrap.com/) as the front end framework.
-
 
 If you want to change the style for the code blocks, you can use [rougify](https://github.com/jneen/rouge). Here are some examples:
 ```bash 
