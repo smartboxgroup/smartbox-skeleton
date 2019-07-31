@@ -5,15 +5,15 @@ permalink: camel/flows-builder
 ---
 
 # How FlowsBuilder compiler pass works
-One key factor to be able to translate the Apache Camel xml flows into Symfony services is the ```FlowsBuilder``` compiler pass.
-This is executed when the symfony container is generated the first time the application is executed.
+One key factor in being able to translate the Apache Camel xml flows into Symfony services is the ```FlowsBuilder``` compiler pass.
+This is executed when the Symfony container is generated, the first time the application is executed.
 
 ## Processor definition registry
-The first thing that happen in this compiler pass is to get the list of the different ```ProcessorDefinition``` the bundle supports.
+The first thing that happens in this compiler pass is to get the list of the different ```ProcessorDefinition``` the bundle supports.
 A ```ProcessorDefintion``` is a service that defines how a particular element in the Apache Camel xml flow needs to be parsed. 
 For instance a ```multicast``` element in the xml flow will be parsed in a different way than a ```recipientList``` element.
-All these ```ProcessorDefintion``` services are defined in CamelConfig in the file ```Resources/config/services.yml``` and tagged
-with the name ```smartesb.definitions``` that is the tag name the compiler pass uses to find these services. See below some examples:
+All these ```ProcessorDefintion``` services are defined in CamelConfig, in the file ```Resources/config/services.yml```, and are tagged
+with the name ```smartesb.definitions```, which is the tag name the compiler pass uses to find these services. See below some examples:
 ```yaml
 services:
   smartesb.definitions.multicast:
@@ -38,8 +38,8 @@ services:
      - [setEvaluator, ["@smartesb.util.evaluator"]]
      - [setProcessorClass, ["Smartbox\Integration\FrameworkBundle\Core\Processors\Routing\RecipientList"]]
 ```
-Another important point when these services are defined is to add the ```nodeName```. This is the name that the node has in the flow xml file
-as you can see in the following example for ```multicast``` and ```pipeline```
+Another important point, when these services are defined is the addition of the ```nodeName```. This is the name that the node has in the flow xml file,
+as you can see in the following example for ```multicast``` and ```pipeline```.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -69,8 +69,8 @@ This service will be used in other steps of the complier pass to get references 
 ## Flows directory and flows version
 Once all this has been done, the next stage is to get the directories and the version of the flows xml files  that should
 be loaded in the application. The ```flows_directories``` and ```frozen_flows_directory``` fields are defined in CamelConfig 
-config and the ```flows_version``` is defined in FrameworkBundle config. To get this information, the compiler pass is getting 
-the extension class of both bundles
+config and the ```flows_version``` is defined in FrameworkBundle config. To get these, the compiler pass is getting 
+the extension class of both bundles...
 ```php
 // This loads the class DependencyInjection/SmartboxIntegrationCamelConfigExtension.php from CamelConfig bundle
 $extension = $container->getExtension('smartbox_integration_camel_config');
@@ -78,7 +78,7 @@ $extension = $container->getExtension('smartbox_integration_camel_config');
 // This loads the class DependencyInjection/SmartboxIntegrationFrameworkExtension.php from Framework bundle
 $frameworkExtension = $container->getExtension('smartbox_integration_framework');
 ```
-and from these 2 classes, the compiler pass will call different methods to get this information.
+... and from these 2 classes, the compiler pass will call different methods to get this information.
 
 ## Current flows
 The third step in this process is to load the current version of the flows if the flow version setup doesn't belong to
@@ -118,13 +118,13 @@ and registering a processor id for that endpoint that will be added to the ```It
 If an xml node is referring to something different than the ```from``` or ```to``` uri nodes, then a ```Processor``` is built.
 To determine which ```Processor``` needs to be built, the compiler pass will use the ```processorDefintionRegistry``` service mentioned
 early to try to get the ```Definition``` of that node.  With that ```Definition```, the compiler pass knows how that xml node needs 
-to be parsed and configured so that at the end the ```Processor``` can be built with a processor id that will be added to the 
+to be parsed and configured, so that, at the end the ```Processor``` can be built with a processor id that will be added to the 
 ```Itinerary```. For instance, if the xml node is defined as ```multicast```, then the compiler
 pass will get the ```MulticastDefinition``` and from there the ```MulticastProcessor``` will be built.
 
 ## Frozen flows
 The last step executed in the ```FlowsBuilder``` compiler pass is to load the different frozen versions of the flows that are 
-defined in ```frozen_flows_directory``` path in the same way it was loaded the current version of the flows.
+defined in ```frozen_flows_directory```, the same way it loaded the current version of the flows.
 
 ## Built flow example
 If we take the example of the ```broadcastping``` flow xml mentioned before in this documentation, at the end of the compiler pass 

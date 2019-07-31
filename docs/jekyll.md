@@ -32,7 +32,7 @@ bundle exec jekyll serve
 
 ### Docker
 
-First access to the /docs folder inside the project
+First access the /docs folder inside the project
 ```bash
 cd docs/
 ```
