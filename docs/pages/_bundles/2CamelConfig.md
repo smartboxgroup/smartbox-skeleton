@@ -40,3 +40,13 @@ To see more details on how the ```FlowsBuilder``` compiler pass works click here
 ## How to add a new component of the camel definition
 ## How to freeze a flow version
 
+You can see the details of freezing a flow [here](/smartesb-skeleton/samples/freezeflows) but it all boils down to run the following command:
+
+```bash
+php app/console smartesb:flows:freeze
+```
+
+The freeze flows command extends Symfony's Command class so it's automatically registered in your application's console.
+
+This will generate all the files in your configured frozen flows folder. Then update the frozen flows version in your `parameters.yml` to make sure that you're using the frozen ones and not the real one. 
+
