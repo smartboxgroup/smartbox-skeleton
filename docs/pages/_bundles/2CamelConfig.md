@@ -44,6 +44,9 @@ And you're all set.
 To see more details on how the ```FlowsBuilder``` compiler pass works click here [here](/smartesb-skeleton/camel/flows-builder)
 
 ## How to build a flow
+
+For asynchronous flows follow [this guide](/samples/asyncflow), for synchronous, [this one](/samples/syncflow).
+
 ## Use eclipse to build a flow
 ## How to add a new component of the camel definition
 ## How to freeze a flow version
