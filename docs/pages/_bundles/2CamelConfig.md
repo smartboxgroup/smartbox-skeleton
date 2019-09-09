@@ -7,9 +7,17 @@ permalink: bundles/camelconfig
 # CamelConfig
 
 ## The goal of the bundle
-CamelConfig is a bundle designed to parse the Apache Camel xml flows and translate this into Symfony services.
+CamelConfig is a bundle designed to parse the Apache Camel XML flows and translate this into Symfony services.  
 
 ## Main features
+
+* Easy to use and implement.
+* Route versioning.
+* Full support for complex routing, like multicasts or recipient lists.
+* Clear route definition, based on Apache's specification.
+* Fully compatible with Symfony 2.8. (Compatibility with 3.4 is part of [the roadmap](/smartesb-skeleton/roadmap))
+* Battle tested.
+
 ## Installation
 Installation is as easy as installing a new bundle in your Symfony application. First start by running `composer`:
 
