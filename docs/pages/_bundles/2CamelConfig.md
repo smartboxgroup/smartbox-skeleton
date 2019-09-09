@@ -32,7 +32,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles = [(
             new Smartbox\Integration\CamelConfigBundle\SmartboxIntegrationCamelConfigBundle(),
             (...)
 ```
