@@ -7,15 +7,15 @@ permalink: bundles/camelconfig
 # CamelConfig
 
 ## The goal of the bundle
-CamelConfig is a bundle designed to parse the Apache Camel XML flows and translate this into Symfony services.  
+CamelConfig is a bundle designed to parse the Apache Camel XML flows and translate this **into Symfony services**.
 
 ## Main features
 
 * Easy to use and implement.
 * Route versioning.
-* Full support for complex routing, like multicasts or recipient lists.
-* Clear route definition, based on Apache's specification.
-* Fully compatible with Symfony 2.8. (Compatibility with 3.4 is part of [the roadmap](smartesb-skeleton/roadmap))
+* Full support for complex routing, like *multicasts* or *recipient lists*.
+* Clear route definition, based **on Apache's specification**.
+* Fully compatible **with Symfony 2.8**. (Compatibility with 3.4 is part of [the roadmap](smartesb-skeleton/roadmap))
 * Battle tested.
 
 ## Installation
@@ -23,7 +23,7 @@ Installation is as easy as installing a new bundle in your Symfony application. 
 
 `$ composer require smartbox/camel-config-bundle`
 
-Then you need to enable the bundle in your kernel.
+Then you need to **enable the bundle** in your kernel.
 
 ```php
 // app/AppKernel.php
@@ -79,13 +79,12 @@ Once you're happy with the flow, you can export it by copying and pasting the so
 ## How to add a new component of the camel definition
 ## How to freeze a flow version
 
-You can see the details of freezing a flow [here](smartesb-skeleton/samples/freezeflows) but it all boils down to run the following command:
+You can see the details of freezing a flow [here](smartesb-skeleton/samples/freezeflows) but it all boils down to run **the following command**:
 
 ```bash
 php app/console smartesb:flows:freeze
 ```
 
-The freeze flows command extends Symfony's Command class so it's automatically registered in your application's console.
+The freeze flows command extends Symfony's Command class so **it's automatically registered** in your application's console.
 
-This will generate all the files in your configured frozen flows folder. Then update the frozen flows version in your `parameters.yml` to make sure that you're using the frozen ones and not the real one. 
-
+This will generate all the files **in your configured frozen flows folder**. Then update the frozen flows version in your `parameters.yml` to make sure that you're using the frozen ones and not the real one. 
