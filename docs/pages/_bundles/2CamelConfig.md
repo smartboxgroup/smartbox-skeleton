@@ -49,7 +49,7 @@ For asynchronous flows follow [this guide](/smartesb-skeleton/samples/asyncflow)
 
 ## Use Eclipse to build a flow
 
-[JBoss Tools](http://marketplace.eclipse.org/content/jboss-tools) is a plugin for Eclipse that can aid you in the process of designing Apache Camel flows. 
+[JBoss Tools](http://marketplace.eclipse.org/content/jboss-tools) is a plugin for Eclipse that can aid you visually in the process of designing Apache Camel flows. 
 
 After installing it from Eclipse's Marketplace you can create a new file by selecting `Red Hat Fuse/Camel XML File`. This will create a base file but you can get creative **by dragging and dropping** the various components of the routes.
 
