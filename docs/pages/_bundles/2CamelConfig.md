@@ -14,7 +14,7 @@ CamelConfig is a bundle designed to parse the Apache Camel XML flows and transla
 * Easy to use and implement.
 * Route versioning.
 * Full support for complex routing, like *multicasts* or *recipient lists*.
-* Clear route definition, based **on Apache's specification**.
+* Clear route definition, based **on Apache Camel's specification**.
 * Fully compatible **with Symfony 2.8**. (Compatibility with 3.4 is part of [the roadmap](smartesb-skeleton/roadmap))
 * Battle tested.
 
@@ -35,6 +35,14 @@ class AppKernel extends Kernel
         $bundles = [(
             new Smartbox\Integration\CamelConfigBundle\SmartboxIntegrationCamelConfigBundle(),
             (...)
+```
+
+Finally you need to set **your flows folder location** in the `services.yml` file:
+
+```
+smartbox_integration_camel_config:
+    flows_directories: %kernel.root_dir%/config/flows
+    frozen_flows_directory: %kernel.root_dir%/config/frozen_flows
 ```
 
 And you're all set.
@@ -59,7 +67,7 @@ To create a simple direct routing, just drag two `Direct` components one after t
 
 ![Camel Route Direct](/smartesb-skeleton/assets/images/camel_single_route.jpg)
 
-Once you're happy with the flow, you can export it by copying and pasting the source code present **in the "Source" tab**.
+Once you're happy with the flow, you can save the file. You can check the source code of the flow by clicking  **the "Source" tab**. It will look like this:
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
