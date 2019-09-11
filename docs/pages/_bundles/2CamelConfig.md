@@ -95,4 +95,9 @@ php app/console smartesb:flows:freeze
 
 The freeze flows command extends Symfony's Command class so **it's automatically registered** in your application's console.
 
-This will generate all the files **in your configured frozen flows folder**. Then update the frozen flows version in your `parameters.yml` to make sure that you're using the frozen ones and not the real one. 
+This will generate all the files **in your configured frozen flows folder**. Please notice that the flow version definition is present in the [Integration Framework Bundle](https://github.com/smartboxgroup/integration-framework-bundle/) and Camel Config depends on it. Make sure you're project declares it as if it's missing, the command will fail.
+
+```
+smartbox_integration_framework:
+    flows_version: 1
+```
