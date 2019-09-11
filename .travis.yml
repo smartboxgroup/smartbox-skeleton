@@ -3,6 +3,9 @@ addons:
     - rabbit.local
     - database.local
     - localhost
+  apt_packages:
+    - librabbitmq-dev
+    - rabbitmq-server
 
 language: php
 
@@ -12,10 +15,6 @@ php:
 
 env:
   - SYMFONY_VERSION=2.8.*
-
-matrix:
-  allow_failures:
-    - php: 7.1
 
 before_install:
   - |
@@ -72,23 +71,19 @@ before_install:
     }
     export -f tpecl
   - |
-    # Install librabbitmq
-    wget http://ftp.debian.org/debian/pool/main/libr/librabbitmq/librabbitmq-dev_0.5.2-2_amd64.deb
-    wget http://ftp.debian.org/debian/pool/main/libr/librabbitmq/librabbitmq1_0.5.2-2_amd64.deb
-    sudo dpkg -i librabbitmq1_0.5.2-2_amd64.deb librabbitmq-dev_0.5.2-2_amd64.deb
   - tfold ext.amqp tpecl amqp-1.9.3 amqp.so "~/.phpenv/versions/${TRAVIS_PHP_VERSION}/etc/conf.d/travis.ini"
   - phpenv config-add travis/z_php.ini
-  - bash travis/install-apcu-pecl.sh
 
 before_script:
+  - sudo systemctl enable rabbitmq-server
   - sudo rabbitmq-plugins enable rabbitmq_stomp
-  - sudo service rabbitmq-server restart
+  - sudo systemctl restart rabbitmq-server
   - if [ "7.0" == "${TRAVIS_PHP_VERSION}" ]; then composer remove --dev enqueue/amqp-ext; fi
   - composer self-update
   - composer install --prefer-dist --no-interaction
 
 script:
-  - SYMFONY_PHPUNIT_VERSION=6.5 SYMFONY_DEPRECATIONS_HELPER=weak_vendors bin/simple-phpunit --debug
+  - SYMFONY_PHPUNIT_VERSION=6.5 SYMFONY_DEPRECATIONS_HELPER="max[self]=0" bin/simple-phpunit
 
 services:
   - rabbitmq
