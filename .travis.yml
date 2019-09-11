@@ -10,15 +10,13 @@ addons:
 language: php
 
 php:
+  - 7.0
   - 7.1
   - 7.2
+  - 7.3
 
 env:
   - SYMFONY_VERSION=2.8.*
-
-matrix:
-  allow_failures:
-    - php: 7.1
 
 before_install:
   - |
@@ -87,7 +85,7 @@ before_script:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - SYMFONY_PHPUNIT_VERSION=6.5 SYMFONY_DEPRECATIONS_HELPER=weak_vendors bin/simple-phpunit --debug
+  - SYMFONY_PHPUNIT_VERSION=6.5 SYMFONY_DEPRECATIONS_HELPER="max[self]=0" bin/simple-phpunit
 
 services:
   - rabbitmq
