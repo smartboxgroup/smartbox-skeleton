@@ -15,3 +15,6 @@ services:
         arguments: ["@kernel"]
         tags:
             - { name: monolog.logger, channel: skeleton }
+
+     cache.app:
+       class: Symfony\Component\Cache\Adapter\ArrayAdapter
