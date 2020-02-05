@@ -16,3 +16,28 @@ From the routing standpoint this callback is no different to any other flow. Thi
 It also means that we can use the callback to write to any type of target, for example we can set our target system as a service that writes to a database, or we can broadcast to multiple target systems. 
 With regard the Skeleton Bundle we don't really have an originating system as we are triggering the flow from a Symfony Command or our fake API/basic controller.
 So, in our case we will send the callback to a basic controller in the SmartboxSkeletonBundle.
+
+In the producer file
+```yaml
+      methods:
+         callback:
+             description: 'Send callback to a remote api'
+             steps:
+               - define:
+                   CallbackMessage: "eval: body"
+               - request:
+                   name: callback
+                   http_method: POST
+                   uri: /smartbox-skeleton/web/remote/callback
+                   body: "eval: mapper.map(CallbackMessage, 'callbackToRemoteApi')"
+                   validations:
+                       - rule: "eval: responses['callback']['statusCode'] == 200"
+                         message: "eval: 'Unexpected response from Web Api: ' ~ responses['callback']['statusCode']"
+                         recoverable: true
+                         display_message: true
+             response:
+                 body: ~
+```
+
+```yaml
+```
